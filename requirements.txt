@@ -1,0 +1,28 @@
+# AI Employee Vault - Python Dependencies
+
+# Core dependencies
+watchdog>=3.0.0          # File system monitoring
+openai>=1.12.0           # OpenAI-compatible API client (for Qwen)
+anthropic>=0.18.0        # Claude API client (optional)
+
+# Silver Tier - Gmail integration
+google-auth>=2.16.0
+google-auth-oauthlib>=1.0.0
+google-auth-httplib2>=0.1.0
+google-api-python-client>=2.80.0
+
+# Silver Tier - WhatsApp integration
+playwright>=1.40.0       # WhatsApp Web automation
+
+# LinkedIn integration (optional)
+# linkedin-api>=2.0.0   # Unofficial LinkedIn API
+
+# Gold Tier - Odoo Integration
+# xmlrpc-client is built-in to Python 3.x
+
+# Gold Tier - Scheduling
+schedule>=1.2.0          # Task scheduling for CEO briefings
+
+# Utilities
+python-dotenv>=1.0.0    # Environment variable management
+requests>=2.31.0        # HTTP requests

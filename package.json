@@ -1,0 +1,23 @@
+{
+  "name": "ai-employee-vault",
+  "version": "1.0.0",
+  "description": "AI Employee Vault - Silver Tier Implementation",
+  "main": "whatsapp_watcher_node.js",
+  "scripts": {
+    "whatsapp": "node whatsapp_watcher_node.js",
+    "test": "echo \"Silver Tier AI Employee System\""
+  },
+  "keywords": [
+    "ai",
+    "automation",
+    "whatsapp",
+    "claude-code"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "googleapis": "^171.4.0",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.34.6"
+  }
+}

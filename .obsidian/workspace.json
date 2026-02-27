@@ -1,0 +1,241 @@
+{
+  "main": {
+    "id": "d57c90c3743fdf01",
+    "type": "split",
+    "children": [
+      {
+        "id": "5149708e850ba0e9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bc22163d5e5988be",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Welcome.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Welcome"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ea67cee53d810969",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "408b9490bd7d17b0",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f76e92bf4e492c33",
+    "type": "split",
+    "children": [
+      {
+        "id": "8b547c27416fcca8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "81166e4a45b69876",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "01883b4c0b06dafb",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "8b0f6fa6fbe89427",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "102c9be9afbc8473",
+    "type": "split",
+    "children": [
+      {
+        "id": "7c29473bb998b5f2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7ae18e381b217753",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Welcome.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Welcome"
+            }
+          },
+          {
+            "id": "e7a43be2dedc4c8f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Welcome.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Welcome"
+            }
+          },
+          {
+            "id": "9182c1d5078d1fe4",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "f1ed7b3113821baf",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f2347a03d13d2746",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Welcome.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Welcome"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "81166e4a45b69876",
+  "lastOpenFiles": [
+    "Needs_Action/EMAIL_19c510fb.md",
+    "Needs_Action/EMAIL_19c50d8e.md",
+    "Needs_Action/EMAIL_19c50c57.md",
+    "Needs_Action/EMAIL_19c4fb83.md",
+    "whatsapp_session/Default/Network/af72d93c-13b3-4c6e-81e5-c85b65d1826d.tmp",
+    "whatsapp_session/Default/Network/35ac22f0-7378-4b9e-a8a4-e4229fffca4e.tmp",
+    "whatsapp_session/lockfile",
+    "whatsapp_session/BrowserMetrics/BrowserMetrics-698CF6C8-7F0.pma",
+    "whatsapp_session/Default/ebf01d1a-c83e-4c7b-a5e3-ebc1dcecc6c5.tmp",
+    "whatsapp_session/Default/Sessions/Session_13415319463226849",
+    "whatsapp_session/Default/Network/a5fc1c52-51f2-49ca-a34c-60edaa80c816.tmp",
+    "whatsapp_session/Default/Network/5944db4a-d16a-4ebb-8429-4d2c7d0ce385.tmp",
+    "whatsapp_session/BrowserMetrics/BrowserMetrics-698CF6A4-2F90.pma",
+    "whatsapp_session/Default/Network/b1b59ce5-3b4e-4a2e-951b-efa485a3580a.tmp",
+    "Needs_Action/EMAIL_19c4e6fb.md",
+    "Needs_Action/EMAIL_19c4e70a.md",
+    "Needs_Action/EMAIL_19c44e4a.md",
+    "Needs_Action/EMAIL_19c46550.md",
+    "Needs_Action/EMAIL_19c46562.md",
+    "Needs_Action/EMAIL_19c46596.md",
+    "Needs_Action/EMAIL_19c47c3a.md",
+    "Needs_Action/EMAIL_19c487ad.md",
+    "Needs_Action/EMAIL_19c487b0.md",
+    "Needs_Action/EMAIL_19c48cd6.md",
+    "Needs_Action/EMAIL_19c4d9ba.md",
+    "Needs_Action/EMAIL_19c4e69f.md",
+    "Needs_Action/EMAIL_19b97e03.md",
+    "Needs_Action/EMAIL_19bc5a4f.md",
+    "Needs_Action/EMAIL_19bc5b5d.md",
+    "Needs_Action/EMAIL_19be8a56.md",
+    "Needs_Action/EMAIL_19c13b25.md",
+    "Needs_Action/EMAIL_19c2e033.md",
+    "Needs_Action/EMAIL_19c2e069.md",
+    "Needs_Action/EMAIL_19c3433b.md",
+    "Needs_Action/EMAIL_19c34c87.md",
+    "Needs_Action/EMAIL_19c3ed01.md"
+  ]
+}

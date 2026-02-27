@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Employee Vault - Control Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Left Sidebar - Metrics Panel -->
+        <aside class="left-sidebar">
+            <div class="logo-section">
+                <div class="logo-icon">🤖</div>
+                <div class="logo-text">AI EMPLOYEE</div>
+                <div class="logo-subtitle">VAULT v2.0</div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">
+                    <span>AUTONOMY LEVEL</span>
+                    <div class="pulse-indicator"></div>
+                </div>
+                <div class="autonomy-display">
+                    <div class="autonomy-value" id="autonomyLevel">SUPERVISED</div>
+                    <div class="autonomy-desc">Human approval required</div>
+                    <div class="autonomy-progress">
+                        <div class="autonomy-progress-bar" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">MEMORY BANKS</div>
+                <div class="memory-grid">
+                    <div class="memory-card">
+                        <div class="memory-icon">📥</div>
+                        <div class="memory-info">
+                            <div class="memory-label">Needs Action</div>
+                            <div class="memory-value" id="memoryNeedsAction">0</div>
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">⏳</div>
+                        <div class="memory-info">
+                            <div class="memory-label">Pending</div>
+                            <div class="memory-value" id="memoryPending">0</div>
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">✅</div>
+                        <div class="memory-info">
+                            <div class="memory-label">Approved</div>
+                            <div class="memory-value" id="memoryApproved">0</div>
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">✔️</div>
+                        <div class="memory-info">
+                            <div class="memory-label">Completed</div>
+                            <div class="memory-value" id="memoryDone">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">WORKFLOW PIPELINE</div>
+                <div class="pipeline-container">
+                    <div class="pipeline-stage">
+                        <div class="stage-indicator active" data-stage="detection"></div>
+                        <span>DETECTION</span>
+                    </div>
+                    <div class="pipeline-connector"></div>
+                    <div class="pipeline-stage">
+                        <div class="stage-indicator" id="stageProcessing" data-stage="processing"></div>
+                        <span>PROCESSING</span>
+                    </div>
+                    <div class="pipeline-connector"></div>
+                    <div class="pipeline-stage">
+                        <div class="stage-indicator" id="stageApproval" data-stage="approval"></div>
+                        <span>APPROVAL</span>
+                    </div>
+                    <div class="pipeline-connector"></div>
+                    <div class="pipeline-stage">
+                        <div class="stage-indicator" id="stageExecution" data-stage="execution"></div>
+                        <span>EXECUTION</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">ACTIVE SKILLS</div>
+                <div class="skill-bar">
+                    <div class="skill-header">
+                        <span class="skill-label">💬 WhatsApp</span>
+                        <span class="skill-value" id="skillWhatsAppValue">0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill whatsapp" id="skillWhatsApp" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-header">
+                        <span class="skill-label">📧 Email</span>
+                        <span class="skill-value" id="skillEmailValue">0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill email" id="skillEmail" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-header">
+                        <span class="skill-label">🔗 LinkedIn</span>
+                        <span class="skill-value" id="skillLinkedInValue">0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill linkedin" id="skillLinkedIn" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">SYSTEM RESOURCES</div>
+                <div class="resource-item">
+                    <div class="resource-label">
+                        <span>CPU</span>
+                        <span id="cpuPercent">0%</span>
+                    </div>
+                    <div class="progress-bar small">
+                        <div class="progress-fill cpu" id="cpuBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-label">
+                        <span>Memory</span>
+                        <span id="memoryPercent">0%</span>
+                    </div>
+                    <div class="progress-bar small">
+                        <div class="progress-fill memory" id="memoryBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-label">
+                        <span>Disk</span>
+                        <span id="diskPercent">0%</span>
+                    </div>
+                    <div class="progress-bar small">
+                        <div class="progress-fill disk" id="diskBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="uptime-display">
+                    <span class="uptime-label">Uptime:</span>
+                    <span class="uptime-value" id="systemUptime">--</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Content - Main Dashboard -->
+        <main class="center-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <h1>AI EMPLOYEE VAULT</h1>
+                    <div class="header-subtitle">Autonomous Task Management System</div>
+                </div>
+                <div class="header-right">
+                    <div class="system-time" id="systemTime">--:--:--</div>
+                    <div class="system-status">
+                        <span class="status-indicator online"></span>
+                        <span>OPERATIONAL</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Quick Stats Cards -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Today's Tasks</div>
+                        <div class="stat-value" id="statToday">0</div>
+                        <div class="stat-trend positive">↑ 12%</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Success Rate</div>
+                        <div class="stat-value" id="statSuccessRate">100%</div>
+                        <div class="stat-trend positive">↑ 5%</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <div class="stat-label">This Week</div>
+                        <div class="stat-value" id="statWeek">0</div>
+                        <div class="stat-trend positive">↑ 23%</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Processed</div>
+                        <div class="stat-value" id="statTotal">0</div>
+                        <div class="stat-trend neutral">—</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Charts -->
+            <section class="charts-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Task Activity (24 Hours)</h3>
+                        <div class="chart-controls">
+                            <button class="chart-btn active" data-period="24h">24H</button>
+                            <button class="chart-btn" data-period="7d">7D</button>
+                            <button class="chart-btn" data-period="30d">30D</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Task Distribution</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Task Lists -->
+            <section class="tasks-section">
+                <div class="section-tabs">
+                    <button class="tab-btn active" data-tab="pending">Pending Approval</button>
+                    <button class="tab-btn" data-tab="needs-action">Needs Action</button>
+                    <button class="tab-btn" data-tab="approved">Approved</button>
+                    <button class="tab-btn" data-tab="done">Completed</button>
+                </div>
+
+                <div class="tab-content active" id="tab-pending">
+                    <div class="tasks-list" id="tasksPending">
+                        <div class="loading-spinner">Loading tasks...</div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-needs-action">
+                    <div class="tasks-list" id="tasksNeedsAction">
+                        <div class="loading-spinner">Loading tasks...</div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-approved">
+                    <div class="tasks-list" id="tasksApproved">
+                        <div class="loading-spinner">Loading tasks...</div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-done">
+                    <div class="tasks-list" id="tasksDone">
+                        <div class="loading-spinner">Loading tasks...</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar - Activity & Watchers -->
+        <aside class="right-sidebar">
+            <div class="panel-section">
+                <div class="section-header">WATCHER STATUS</div>
+                <div class="watcher-list">
+                    <div class="watcher-item" id="watcherWhatsApp">
+                        <div class="watcher-icon">💬</div>
+                        <div class="watcher-info">
+                            <div class="watcher-name">WhatsApp</div>
+                            <div class="watcher-status offline">Offline</div>
+                        </div>
+                        <div class="watcher-indicator"></div>
+                    </div>
+                    <div class="watcher-item" id="watcherGmail">
+                        <div class="watcher-icon">📧</div>
+                        <div class="watcher-info">
+                            <div class="watcher-name">Gmail</div>
+                            <div class="watcher-status offline">Offline</div>
+                        </div>
+                        <div class="watcher-indicator"></div>
+                    </div>
+                    <div class="watcher-item" id="watcherLinkedIn">
+                        <div class="watcher-icon">🔗</div>
+                        <div class="watcher-info">
+                            <div class="watcher-name">LinkedIn</div>
+                            <div class="watcher-status offline">Offline</div>
+                        </div>
+                        <div class="watcher-indicator"></div>
+                    </div>
+                    <div class="watcher-item" id="watcherOrchestrator">
+                        <div class="watcher-icon">🤖</div>
+                        <div class="watcher-info">
+                            <div class="watcher-name">Orchestrator</div>
+                            <div class="watcher-status offline">Offline</div>
+                        </div>
+                        <div class="watcher-indicator"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">LIVE ACTIVITY</div>
+                <div class="activity-feed" id="activityFeed">
+                    <div class="activity-item">
+                        <div class="activity-time">--:--</div>
+                        <div class="activity-text">System initialized</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">QUICK ACTIONS</div>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="refreshDashboard()">
+                        <span class="btn-icon">🔄</span>
+                        <span>Refresh</span>
+                    </button>
+                    <button class="action-btn" onclick="downloadLogs()">
+                        <span class="btn-icon">📥</span>
+                        <span>Download Logs</span>
+                    </button>
+                    <button class="action-btn" onclick="openSettings()">
+                        <span class="btn-icon">⚙️</span>
+                        <span>Settings</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Task Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Task details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-success" id="btnApprove" onclick="approveTask()">Approve</button>
+                <button class="btn btn-danger" id="btnReject" onclick="rejectTask()">Reject</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
