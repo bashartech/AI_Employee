@@ -78,6 +78,44 @@ Drop file in `Inbox/` or `Needs Action/`
 
 ## 📧 Email Task Examples
 
+### Gmail Smart Filtering (NEW!)
+
+**Automatic Filtering:**
+- ✅ Only important emails reach Needs Action
+- ❌ Promotional emails automatically blocked
+- ❌ Social media notifications filtered
+- ❌ Receipts/updates filtered
+
+**Customize Filtering:**
+```bash
+# Edit configuration
+notepad gmail_filter_config.py
+
+# Adjust strictness (1-10, default: 5)
+MIN_IMPORTANCE_SCORE = 5
+
+# Add VIP senders
+WHITELIST_DOMAINS = ['@client.com', 'boss@company.com']
+
+# Block senders
+BLACKLIST_DOMAINS = ['noreply@', '@spammer.com']
+```
+
+**View Statistics:**
+```
+[10:30:15] Found 3 important email(s)
+  ✓ Important: Important email (score: 8)
+  ✗ Filtered: Promotional email (Gmail category)
+  ✓ Important: Important email (score: 7)
+
+📊 Statistics:
+  Processed: 2
+  Filtered: 1
+  Filter Rate: 33.3%
+```
+
+See `GMAIL_FILTERING_GUIDE.md` for complete guide.
+
 ### Simple Email
 **File:** `Needs Action/email_client.md`
 ```markdown

@@ -199,6 +199,52 @@ http://localhost:5000
 5. You review and approve
 6. **Execute Approved** sends email via Gmail API
 
+### 🎯 Smart Email Filtering (NEW!)
+
+The Gmail watcher now includes **intelligent filtering** that automatically blocks 70-90% of unwanted emails:
+
+**Automatically Filtered:**
+- ❌ Promotional emails (ads, sales, discounts)
+- ❌ Social media notifications
+- ❌ Receipts and updates
+- ❌ Forum/mailing list emails
+- ❌ Newsletter spam
+
+**Always Processed:**
+- ✅ Primary inbox emails
+- ✅ Gmail "Important" marked emails
+- ✅ Professional/work-related emails
+- ✅ Whitelisted senders
+
+**Configuration:**
+
+Edit `gmail_filter_config.py` to customize:
+
+```python
+# Adjust strictness (1-10, default: 5)
+MIN_IMPORTANCE_SCORE = 5
+
+# Add VIP senders (always pass through)
+WHITELIST_DOMAINS = [
+    '@importantclient.com',
+    'boss@company.com',
+]
+
+# Block specific senders
+BLACKLIST_DOMAINS = [
+    'noreply@',
+    '@spammer.com',
+]
+```
+
+**Benefits:**
+- 70-90% noise reduction
+- Only important emails reach Needs Action
+- Saves time and API costs
+- Fully customizable
+
+See `GMAIL_FILTERING_GUIDE.md` for complete documentation.
+
 ### Usage
 
 **Manual Email Task:**

@@ -74,6 +74,9 @@ class Orchestrator:
         # File system observer
         self.observer = Observer()
 
+        # Email signature configuration
+        self.sender_name = "M. Bashar Sheikh"  # Your name for email signatures
+
         logger.info("✅ Orchestrator initialized (using Claude Code)")
 
     def start(self):
@@ -250,7 +253,7 @@ I hope this email finds you well. I am writing to provide you with information r
 I would be happy to discuss this topic in more detail and answer any questions you may have. Please feel free to reach out if you need additional information or clarification.
 
 Best regards,
-AI Employee"""
+{self.sender_name}"""
                 else:
                     email_body = f"""Hi there,
 
@@ -259,7 +262,7 @@ Thanks for reaching out! I'd be happy to help you with {topic}.
 Let me know if you have any specific questions or if there's anything else I can assist you with.
 
 Best,
-AI Employee"""
+{self.sender_name}"""
 
             # Create approval file
             timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -544,9 +547,9 @@ The language provides direct control over hardware resources while maintaining a
 If you would like more detailed information about specific aspects of C programming, such as syntax, data structures, or practical applications, please feel free to reach out.
 
 Best regards,
-AI Employee"""
+{self.sender_name}"""
         else:
-            return """Hi there,
+            return f"""Hi there,
 
 Thanks for your interest in learning about C!
 
@@ -563,7 +566,7 @@ C is perfect if you want to understand low-level programming concepts or work on
 Let me know if you'd like to dive deeper into any specific topics!
 
 Best,
-AI Employee"""
+{self.sender_name}"""
 
     def _process_email_task(self, file_path: Path, task_content: str) -> bool:
         """Process email task and create approval file"""
@@ -612,7 +615,7 @@ AI Employee"""
 Thank you for reaching out. I'm doing well, thank you for asking. How can I assist you today?
 
 Best regards,
-AI Employee"""
+{self.sender_name}"""
 
             # Create approval file
             timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
