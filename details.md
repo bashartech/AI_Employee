@@ -294,3 +294,14 @@ Log everything
 Recover from errors
 
 All using FREE Claude manually.
+
+
+scp -i "C:\Users\H P\.ssh\digitaloceonsshkey" D:\DATA\HACKATHON_0\AI_Employee_Vault\engine\orchestrator.py root@167.71.237.77:/home/AI_Employee/engine/orchestrator.py 
+
+scp -i "C:\Users\H P\.ssh\digitaloceonsshkey" D:\DATA\HACKATHON_0\AI_Employee_Vault\engine\orchestrator_with_qwen.py root@167.71.237.77:/home/AI_Employee/engine/orchestrator.py
+
+scp -i "C:\Users\H P\.ssh\digitaloceonsshkey" D:\DATA\HACKATHON_0\AI_Employee_Vault\engine\qwen_ai.py root@167.71.237.77:/home/AI_Employee/engine/
+
+pm2 start engine/orchestrator.py --name orchestrator --interpreter python
+
+pm2 start engine/orchestrator.py --name orchestrator --interpreter python

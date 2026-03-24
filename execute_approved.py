@@ -478,14 +478,20 @@ status: {status}
         """Process a single approved file"""
         try:
             content = file_path.read_text(encoding='utf-8')
-            
+
             # Determine action type and execute
             if "APPROVAL_send_email" in file_path.name or "action: send_email" in content:
                 success = self.execute_email(file_path)
             elif "APPROVAL_send_whatsapp" in file_path.name or "action: send_whatsapp" in content:
                 success = self.execute_whatsapp(file_path)
-            elif "LINKEDIN_POST" in file_path.name or "action: linkedin_post" in content:
+            elif "APPROVAL_linkedin_post" in file_path.name or "LINKEDIN_POST" in file_path.name or "action: linkedin_post" in content:
                 success = self.execute_linkedin(file_path)
+            elif "APPROVAL_twitter" in file_path.name or "action: twitter" in content:
+                success = self.execute_twitter(file_path)  # NEW!
+            elif "APPROVAL_facebook_reply" in file_path.name or "action: facebook_reply" in content:
+                success = self.execute_facebook_reply(file_path)
+            elif "APPROVAL_facebook" in file_path.name or "action: facebook" in content:
+                success = self.execute_facebook(file_path)
             elif "ODOO_LEAD" in file_path.name or "action: create_lead" in content:
                 success = self.execute_odoo_lead(file_path)
             elif "ODOO_INV" in file_path.name or "action: create_invoice" in content:
@@ -507,6 +513,480 @@ status: {status}
         except Exception as e:
             logger.error(f"[ERROR] Processing {file_path.name}: {e}")
 
+    def execute_facebook(self, file_path: Path) -> bool:
+        """Execute approved Facebook action"""
+        try:
+            from engine.facebook_manager import FacebookPageManager
+
+            logger.info(f"[FACEBOOK] Executing: {file_path.name}")
+
+            # Read approval file
+            content = file_path.read_text(encoding='utf-8')
+
+            # Extract action type
+            action = self.extract_yaml_field(content, 'action')
+
+            if not action:
+                logger.error(f"[FACEBOOK] No action specified in {file_path.name}")
+                return False
+
+            manager = FacebookPageManager()
+
+            if action == 'facebook_post':
+                # Extract message from content - check multiple formats
+                message = None
+
+                # Try "## AI-Generated Content" first (new format from scheduler)
+                if "## AI-Generated Content" in content:
+                    parts = content.split("## AI-Generated Content", 1)
+                    if len(parts) > 1:
+                        msg_part = parts[1].strip()
+                        # Stop at next section (## Diagram or ## Instructions)
+                        if "## AI-Generated Diagram" in msg_part:
+                            msg_part = msg_part.split("## AI-Generated Diagram")[0].strip()
+                        elif "## Instructions" in msg_part:
+                            msg_part = msg_part.split("## Instructions")[0].strip()
+                        elif "## Uploaded Image" in msg_part:
+                            msg_part = msg_part.split("## Uploaded Image")[0].strip()
+                        message = msg_part
+
+                # Fallback to "## Message" or "## Content"
+                if not message:
+                    for marker in ["## Message", "## Content"]:
+                        if marker in content:
+                            parts = content.split(marker, 1)
+                            if len(parts) > 1:
+                                msg_part = parts[1].strip()
+                                if "##" in msg_part:
+                                    msg_part = msg_part.split("##")[0].strip()
+                                message = msg_part
+                                break
+
+                if not message:
+                    logger.error(f"[FACEBOOK] No message found in {file_path.name}")
+                    logger.error(f"   Content preview: {content[:500]}...")
+                    return False
+
+                # Extract image path - check BOTH image_path: and diagram_path: in YAML
+                image_path = None
+                
+                # Check YAML frontmatter first
+                if "image_path:" in content:
+                    yaml_match = re.search(r'image_path:\s*(.+)', content)
+                    if yaml_match:
+                        image_path = yaml_match.group(1).strip()
+                        logger.info(f"[FACEBOOK] ✅ Found uploaded image in YAML: {image_path}")
+                
+                # Also check for diagram_path: (generated diagrams)
+                if not image_path and "diagram_path:" in content:
+                    yaml_match = re.search(r'diagram_path:\s*(.+)', content)
+                    if yaml_match:
+                        image_path = yaml_match.group(1).strip()
+                        logger.info(f"[FACEBOOK] ✅ Found generated diagram in YAML: {image_path}")
+                
+                # Also check for diagram image section (for auto-generated diagrams)
+                if not image_path and "## Diagram Image" in content:
+                    parts = content.split("## Diagram Image", 1)
+                    if len(parts) > 1:
+                        image_part = parts[1].strip()
+                        image_match = re.search(r'Image file:\s*`([^`]+)`', image_part)
+                        if image_match:
+                            image_path = image_match.group(1).strip()
+                            logger.info(f"[FACEBOOK] ✅ Found diagram image: {image_path}")
+                
+                # Log what we found
+                if image_path:
+                    logger.info(f"[FACEBOOK] 📷 Will post with image: {image_path}")
+                    # Verify file exists
+                    if not Path(image_path).exists():
+                        logger.warning(f"[FACEBOOK] ⚠️ Image file not found: {image_path}")
+                        image_path = None
+                else:
+                    logger.info(f"[FACEBOOK] 📝 Posting text only (no image found)")
+
+                # Post to Facebook (with image if available)
+                if image_path and Path(image_path).exists():
+                    logger.info(f"[FACEBOOK] Posting with image: {image_path}")
+                    result = manager.create_post_with_local_image(message, image_path)
+                else:
+                    logger.info(f"[FACEBOOK] Posting text only")
+                    result = manager.create_post(message)
+
+                if result.get('success'):
+                    logger.info(f"[FACEBOOK] Post created: {result['post_id']}")
+                    self._create_execution_log(file_path, 'facebook_post', 'success', {
+                        'post_id': result['post_id'],
+                        'has_image': 'Yes' if image_path else 'No'
+                    })
+                    return True
+                else:
+                    logger.error(f"[FACEBOOK] Post failed: {result.get('error')}")
+                    self._create_execution_log(file_path, 'facebook_post', 'failed', {
+                        'error': result.get('error')
+                    })
+                    return False
+
+            elif action == 'facebook_delete':
+                # Extract post ID
+                post_id = self.extract_yaml_field(content, 'post_id')
+
+                if not post_id:
+                    logger.error(f"[FACEBOOK] No post_id found in {file_path.name}")
+                    return False
+
+                # Delete post
+                result = manager.delete_post(post_id)
+
+                if result.get('success'):
+                    logger.info(f"[FACEBOOK] Post deleted: {post_id}")
+                    self._create_execution_log(file_path, 'facebook_delete', 'success', {
+                        'post_id': post_id
+                    })
+                    return True
+                else:
+                    logger.error(f"[FACEBOOK] Delete failed: {result.get('error')}")
+                    return False
+
+            elif action == 'facebook_reply':
+                # Extract comment ID and message
+                comment_id = self.extract_yaml_field(content, 'comment_id')
+
+                if not comment_id:
+                    logger.error(f"[FACEBOOK] No comment_id found in {file_path.name}")
+                    return False
+
+                # Extract reply message
+                if "## Message" in content or "## Reply" in content:
+                    for marker in ["## Message", "## Reply"]:
+                        if marker in content:
+                            parts = content.split(marker, 1)
+                            if len(parts) > 1:
+                                msg_part = parts[1].strip()
+                                if "##" in msg_part:
+                                    msg_part = msg_part.split("##")[0].strip()
+                                message = msg_part
+                                break
+
+                if not message:
+                    message = "Thank you for your comment!"
+
+                # Reply to comment
+                result = manager.reply_to_comment(comment_id, message)
+
+                if result.get('success'):
+                    logger.info(f"[FACEBOOK] Reply posted to comment: {comment_id}")
+                    self._create_execution_log(file_path, 'facebook_reply', 'success', {
+                        'comment_id': comment_id
+                    })
+                    return True
+                else:
+                    logger.error(f"[FACEBOOK] Reply failed: {result.get('error')}")
+                    return False
+
+            elif action == 'facebook_hide':
+                # Extract comment ID
+                comment_id = self.extract_yaml_field(content, 'comment_id')
+
+                if not comment_id:
+                    logger.error(f"[FACEBOOK] No comment_id found in {file_path.name}")
+                    return False
+
+                # Hide comment
+                result = manager.hide_comment(comment_id)
+
+                if result.get('success'):
+                    logger.info(f"[FACEBOOK] Comment hidden: {comment_id}")
+                    self._create_execution_log(file_path, 'facebook_hide', 'success', {
+                        'comment_id': comment_id
+                    })
+                    return True
+                else:
+                    logger.error(f"[FACEBOOK] Hide failed: {result.get('error')}")
+                    return False
+
+            else:
+                logger.error(f"[FACEBOOK] Unknown action: {action}")
+                return False
+
+        except Exception as e:
+            logger.error(f"[FACEBOOK] Error: {e}")
+            return False
+    
+    def execute_facebook_reply(self, file_path: Path) -> bool:
+        """Execute approved Facebook reply (separate method for clarity)"""
+        try:
+            from engine.facebook_manager import FacebookPageManager
+            
+            logger.info(f"[FACEBOOK] Executing reply: {file_path.name}")
+            
+            # Read approval file
+            content = file_path.read_text(encoding='utf-8')
+            
+            # Extract comment ID
+            comment_id = self.extract_yaml_field(content, 'comment_id')
+            
+            if not comment_id:
+                logger.error(f"[FACEBOOK] No comment_id found in {file_path.name}")
+                return False
+            
+            # Extract reply message from "## AI-Generated Response" section
+            if "## AI-Generated Response" in content:
+                parts = content.split("## AI-Generated Response", 1)
+                if len(parts) > 1:
+                    msg_part = parts[1].strip()
+                    if "##" in msg_part:
+                        msg_part = msg_part.split("##")[0].strip()
+                    message = msg_part
+                else:
+                    message = "Thanks for your interest!"
+            else:
+                message = "Thanks for your interest!"
+            
+            # Post reply using Facebook manager
+            manager = FacebookPageManager()
+            result = manager.post_comment_reply(comment_id, message)
+            
+            if result.get('success'):
+                logger.info(f"[FACEBOOK] Reply posted to comment: {comment_id}")
+                self._create_execution_log(file_path, 'facebook_reply', 'success', {
+                    'comment_id': comment_id,
+                    'reply_id': result.get('reply_id')
+                })
+                return True
+            else:
+                logger.error(f"[FACEBOOK] Reply failed: {result.get('error')}")
+                return False
+        
+        except Exception as e:
+            logger.error(f"[FACEBOOK] Reply error: {e}")
+            return False
+    
+    def execute_twitter(self, file_path: Path) -> bool:
+        """Execute approved Twitter post - MANUAL POSTING WITH IMAGE SUPPORT (FREE)"""
+        try:
+            logger.info(f"[TWITTER] Processing manual post: {file_path.name}")
+
+            # Read approval file
+            content = file_path.read_text(encoding='utf-8')
+
+            # Extract content - check for both "## Content" and "## AI-Generated Content"
+            message = ""
+
+            if "## AI-Generated Content" in content:
+                # Format from orchestrator with Claude
+                parts = content.split("## AI-Generated Content", 1)
+                if len(parts) > 1:
+                    msg_part = parts[1].strip()
+                    if "##" in msg_part:
+                        msg_part = msg_part.split("##")[0].strip()
+                    message = msg_part
+            elif "## Content" in content:
+                # Legacy format
+                parts = content.split("## Content", 1)
+                if len(parts) > 1:
+                    msg_part = parts[1].strip()
+                    if "##" in msg_part:
+                        msg_part = msg_part.split("##")[0].strip()
+                    message = msg_part
+
+            if not message:
+                logger.error(f"[TWITTER] No content found in {file_path.name}")
+                return False
+
+            # Extract diagram image path if present
+            image_path = None
+            if "## Diagram Image" in content:
+                # Extract image path from approval file
+                parts = content.split("## Diagram Image", 1)
+                if len(parts) > 1:
+                    image_part = parts[1].strip()
+                    # Look for "Image file: `path`" pattern
+                    import re
+                    image_match = re.search(r'Image file:\s*`([^`]+)`', image_part)
+                    if image_match:
+                        image_path = image_match.group(1).strip()
+                        logger.info(f"[TWITTER] Found diagram image: {image_path}")
+
+            # Check if thread
+            is_thread = 'thread' in file_path.name.lower() or 'thread' in content.lower()
+
+            # Create manual posting instructions
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            manual_post_file = self.done_folder / f"TWITTER_MANUAL_{timestamp}.md"
+
+            # Create URL-encoded tweet for Twitter intent
+            import urllib.parse
+            tweet_url = f"https://twitter.com/intent/tweet?text={urllib.parse.quote(message)}"
+
+            if is_thread:
+                # For threads, create multiple URLs
+                tweets = [t.strip() for t in message.split('\n\n') if t.strip()]
+                tweet_urls = []
+                for i, tweet in enumerate(tweets):
+                    encoded = urllib.parse.quote(tweet)
+                    tweet_urls.append(f"https://twitter.com/intent/tweet?text={encoded}")
+
+                # Build thread instructions
+                thread_instructions = ""
+                for i, url in enumerate(tweet_urls):
+                    if i == 0:
+                        thread_instructions += f"### Tweet {i+1}:\n**Click:** {url}\n\n"
+                    elif i == 1:
+                        thread_instructions += f"### Tweet {i+1}:\n**Click:** {url}\n*(Reply to Tweet 1)*\n\n"
+                    else:
+                        thread_instructions += f"### Tweet {i+1}:\n**Click:** {url}\n*(Reply to Tweet {i})*\n\n"
+
+                manual_content = f"""---
+type: twitter_manual_post
+action: post_thread
+original_file: {file_path.name}
+---
+
+# Twitter Thread - Manual Posting Instructions
+
+## Thread Content ({len(tweets)} tweets)
+
+{message}
+
+---
+
+## How to Post This Thread
+
+{thread_instructions}
+## Step-by-Step Instructions
+
+1. **Click the first tweet link** above
+2. **Click "Tweet"** to post
+3. **Click the second tweet link** (it will auto-reply to first)
+4. **Click "Tweet"** to post
+5. **Repeat** for remaining tweets
+
+---
+
+## Original Approval File
+
+{file_path.name}
+
+---
+*Posted manually via AI Employee Vault*
+"""
+            else:
+                # Single tweet with optional image
+                if image_path and Path(image_path).exists():
+                    manual_content = f"""---
+type: twitter_manual_post
+action: post_with_image
+original_file: {file_path.name}
+image_path: {image_path}
+---
+
+# Twitter Post with Image - Manual Posting Instructions
+
+## Tweet Content
+
+{message}
+
+---
+
+## Diagram Image
+
+**Image File:** `{image_path}`
+
+**Full Path:** {Path(image_path).absolute()}
+
+---
+
+## How to Post This Tweet with Image
+
+### Option 1: Manual Upload (Recommended)
+
+1. **Open Twitter:** https://twitter.com/home
+2. **Click "What is happening?!"**
+3. **Paste this text:**
+
+```
+{message}
+```
+
+4. **Click the image icon** 🖼️
+5. **Select the image file:** `{Path(image_path).absolute()}`
+6. **Click "Tweet"**
+
+### Option 2: Quick Tweet (Text Only)
+
+**Click:** {tweet_url}
+
+*(Note: Twitter intent URLs don't support image uploads. Use Option 1 for images.)*
+
+---
+
+## Original Approval File
+
+{file_path.name}
+
+---
+*Posted manually via AI Employee Vault*
+*Image: {Path(image_path).name if image_path else 'None'}*
+"""
+                else:
+                    # No image - just text
+                    manual_content = f"""---
+type: twitter_manual_post
+action: post_text_only
+original_file: {file_path.name}
+---
+
+# Twitter Post - Manual Posting Instructions
+
+## Tweet Content
+
+{message}
+
+---
+
+## How to Post This Tweet
+
+### Option 1: Quick Tweet
+
+**Click:** {tweet_url}
+
+### Option 2: Manual Post
+
+1. **Open Twitter:** https://twitter.com/home
+2. **Click "What is happening?!"**
+3. **Paste this text:**
+
+```
+{message}
+```
+
+4. **Click "Tweet"**
+
+---
+
+## Original Approval File
+
+{file_path.name}
+
+---
+*Posted manually via AI Employee Vault*
+"""
+
+            # Write manual posting instructions
+            manual_post_file.write_text(manual_content, encoding='utf-8')
+            logger.info(f"[TWITTER] Created manual post instructions: {manual_post_file.name}")
+
+            # Move original approval file to Done
+            done_path = self.done_folder / file_path.name
+            shutil.move(str(file_path), str(done_path))
+            logger.info(f"[TWITTER] Moved to Done: {file_path.name}")
+
+            return True
+
+        except Exception as e:
+            logger.error(f"[TWITTER] Error: {e}")
+            return False
+
     def process_all_approved(self):
         """Process all approved files in Approved folder"""
         logger.info("[EXECUTOR] Checking for approved actions...")
@@ -519,10 +999,20 @@ status: {status}
         for file_path in self.approved_folder.glob("APPROVAL_send_whatsapp_*.md"):
             self.process_approved_file(file_path)
 
-        # Process LinkedIn approvals
+        # Process LinkedIn approvals (both patterns)
+        for file_path in self.approved_folder.glob("APPROVAL_linkedin_post_*.md"):
+            self.process_approved_file(file_path)
         for file_path in self.approved_folder.glob("APPROVAL_linkedin_*.md"):
             self.process_approved_file(file_path)
         for file_path in self.approved_folder.glob("LINKEDIN_POST_*.md"):
+            self.process_approved_file(file_path)
+
+        # Process Twitter approvals (NEW!)
+        for file_path in self.approved_folder.glob("APPROVAL_twitter_*.md"):
+            self.process_approved_file(file_path)
+
+        # Process Facebook approvals
+        for file_path in self.approved_folder.glob("APPROVAL_facebook_*.md"):
             self.process_approved_file(file_path)
 
         # Process Odoo approvals (Gold Tier)

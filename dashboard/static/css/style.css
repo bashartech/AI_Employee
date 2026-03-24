@@ -1383,3 +1383,155 @@ body {
         padding: 8px;
     }
 }
+
+/* Upload Section Styles */
+.upload-section {
+    background: var(--bg-panel);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.upload-section .section-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--bg-hover);
+    padding-bottom: 10px;
+}
+
+.upload-section .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.upload-section .tab-btn.active {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: white;
+}
+
+.upload-section .tab-btn:hover:not(.active) {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input[type="file"],
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+    background: var(--bg-card);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--cyan);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group input[type="file"] {
+    cursor: pointer;
+}
+
+.upload-section .btn {
+    align-self: flex-start;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.upload-section .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: white;
+}
+
+.upload-section .btn-success {
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    color: var(--bg-main);
+}
+
+.upload-section .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+}
+
+.upload-status {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    display: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+}
+
+.upload-status.success {
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid var(--green);
+    color: var(--green);
+}
+
+.upload-status.error {
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid var(--red);
+    color: var(--red);
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .upload-section .tab-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
