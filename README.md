@@ -1,25 +1,25 @@
 # 🤖 AI Employee Vault - Cloud Automation System
 
-**Enterprise-Grade AI-Powered Business Automation Platform**
+**AI-Powered Business Automation Platform | Cloud-Deployed & Production-Ready**
 
 [![Status](https://img.shields.io/badge/status-production-green)](https://github.com)
-[![Version](https://img.shields.io/badge/version-3.0-blue)](https://github.com)
-[![License](https://img.shields.io/badge/license-proprietary-red)](https://github.com)
+[![Version](https://img.shields.io/badge/version-4.0-blue)](https://github.com)
+[![Cloud](https://img.shields.io/badge/cloud-Digital%20Ocean-orange)](https://github.com)
 
 ---
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [What's New in v3.0](#whats-new-in-v30)
+- [Current Features](#current-features)
+- [Cloud Automation](#cloud-automation)
+- [Local Automation](#local-automation)
 - [Architecture](#architecture)
 - [Cloud Infrastructure](#cloud-infrastructure)
-- [Access URLs](#access-urls)
-- [Features](#features)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
-- [API Documentation](#api-documentation)
+- [Skills & Documentation](#skills--documentation)
 - [Troubleshooting](#troubleshooting)
 - [Support](#support)
 
@@ -27,57 +27,291 @@
 
 ## 🎯 Overview
 
-AI Employee Vault is a comprehensive cloud-based automation platform that leverages AI to automate business processes across multiple channels including **Facebook, Twitter, Email, WhatsApp, LinkedIn, and Odoo ERP**. Built for enterprises seeking to streamline operations through intelligent automation.
+**AI Employee Vault** is a comprehensive AI-powered business automation platform deployed on Digital Ocean cloud. It automates workflows across **Facebook, Twitter, Email, WhatsApp, LinkedIn, and Odoo ERP** with Claude AI content generation, scheduling, and approval workflows.
 
 ### **Key Capabilities**
 
 - ✅ **Multi-Channel Automation** - Facebook, Twitter, Email, WhatsApp, LinkedIn
 - ✅ **ERP Integration** - Full Odoo ERP integration (CRM, Sales, Invoicing)
 - ✅ **AI-Powered** - Claude AI for professional content generation
-- ✅ **Scheduling** - Schedule posts for Twitter & Facebook
+- ✅ **Post Scheduling** - Schedule Twitter & Facebook posts
+- ✅ **Diagram Generation** - Auto-generate Mermaid diagrams (100% FREE)
+- ✅ **Image Upload** - Upload images with posts
 - ✅ **Approval Workflows** - Human-in-the-loop approval system
-- ✅ **Cloud-Native** - Deployed on Digital Ocean cloud infrastructure
+- ✅ **Cloud-Native** - Deployed on Digital Ocean (24/7)
 - ✅ **Real-Time Monitoring** - Live dashboard with analytics
-- ✅ **Audit Trail** - Complete execution logs and compliance tracking
+- ✅ **Audit Trail** - Complete execution logs
 
 ---
 
-## 🎉 What's New in v3.0
+## ✨ CURRENT FEATURES
 
-### **✨ Post Scheduling**
-- **Twitter Scheduling** - Schedule tweets for specific dates/times
-- **Facebook Scheduling** - Schedule posts with automatic approval workflow
-- **Claude Enhancement** - All scheduled posts enhanced by Claude AI before posting
-- **Approval Required** - Human approval still required even for scheduled posts
+### **1. Facebook Automation** 📘
 
-### **🐦 Twitter Integration**
-- **Create Tweets** - Professional tweets with Claude AI enhancement
-- **Thread Support** - Create multi-tweet threads
-- **Scheduling** - Schedule tweets for optimal engagement times
-- **Profile Management** - View profile info and analytics
-- **Free Posting** - Uses twitter.com/intent/tweet (100% FREE, no API payment needed)
+**Cloud-Based (Fully Automated)**
 
-### **📘 Facebook Complete Automation**
-- **Post Creation** - AI-generated professional posts
-- **Comment Management** - Auto-reply to comments, detect leads
-- **Lead Generation** - Extract leads from comments, create Odoo entries
-- **Analytics** - Page insights, post performance tracking
-- **Scheduling** - Schedule posts for later publishing
+**Capabilities:**
+- ✅ Create posts with AI-generated content
+- ✅ Schedule posts for later
+- ✅ Upload images with posts
+- ✅ Delete posts by ID
+- ✅ Reply to comments automatically
+- ✅ Lead detection from comments
+- ✅ Post analytics and insights
+- ✅ Odoo CRM integration for leads
 
-### **🤖 Claude AI Integration**
-- **Professional Content** - All posts enhanced by Claude before approval
-- **Consistent Quality** - Same enhancement for scheduled and immediate posts
-- **Smart Fallback** - Uses original content if Claude unavailable
+**Workflow:**
+```
+User creates post → Claude enhances content → 
+Approval required → Human approves → 
+Posts to Facebook automatically (with image)
+```
 
-### **📊 Enhanced Dashboard**
-- **Twitter Management UI** - Create, schedule, and view tweets
-- **Facebook Management UI** - Complete Facebook page management
-- **Schedule Tabs** - Dedicated scheduling interface for both platforms
-- **Datetime Picker** - Easy scheduling with visual datetime selector
+**API Endpoints:**
+```
+POST /api/facebook/post      - Create post
+POST /api/facebook/schedule  - Schedule post
+GET  /api/facebook/posts     - Get recent posts
+GET  /api/facebook/analytics - Get analytics
+```
 
 ---
 
-## 🏗️ Architecture
+### **2. Twitter Automation** 🐦
+
+**Cloud-Based (Semi-Automated)**
+
+**Capabilities:**
+- ✅ Create tweets with Claude AI enhancement
+- ✅ Schedule tweets for specific dates/times
+- ✅ Thread creation (multi-tweet)
+- ✅ Auto-generate diagrams (Mermaid)
+- ✅ Upload images (manual posting)
+- ✅ Profile information & analytics
+
+**Free Posting Method:**
+- Uses `twitter.com/intent/tweet` (100% FREE)
+- No Twitter API payment required
+- Human reviews before posting
+
+**API Endpoints:**
+```
+POST /api/twitter/post       - Create tweet
+POST /api/twitter/schedule   - Schedule tweet
+GET  /api/twitter/tweets     - Get recent tweets
+GET  /api/twitter/profile    - Get profile info
+```
+
+---
+
+### **3. Email Automation** 📧
+
+**Cloud-Based (Fully Automated)**
+
+**Capabilities:**
+- ✅ Gmail API integration
+- ✅ Auto-reply to incoming emails
+- ✅ Email templates and drafts
+- ✅ Attachment support
+- ✅ Email threading
+
+**Workflow:**
+```
+Gmail Watcher detects new email → 
+Creates task in Needs Action/ → 
+Claude drafts reply → Human approves → 
+Sends via Gmail API
+```
+
+---
+
+### **4. WhatsApp Automation** 💬
+
+**Local-Based (Requires Local Session)**
+
+**Capabilities:**
+- ✅ Send messages (WhatsApp Web)
+- ✅ Auto-reply to messages
+- ✅ Group messaging
+- ✅ Media support (images, documents)
+- ✅ Contact management
+
+**Note:** Requires local browser session for authentication due to WhatsApp Web security.
+
+---
+
+### **5. LinkedIn Automation** 🔗
+
+**Local-Based (Requires Local Session)**
+
+**Capabilities:**
+- ✅ Create professional posts
+- ✅ Auto-generate content with AI
+- ✅ Hashtag optimization
+- ✅ Post scheduling
+- ✅ Engagement tracking
+
+**Note:** Uses browser automation (Playwright).
+
+---
+
+### **6. Odoo ERP Integration** 🏢
+
+**Cloud-Based (Fully Automated)**
+
+**Capabilities:**
+- ✅ Lead creation and management
+- ✅ Customer management
+- ✅ Sales quotations
+- ✅ Invoice generation
+- ✅ Inventory tracking
+- ✅ Financial reporting
+
+**Modules:**
+- CRM (Customer Relationship Management)
+- Sales (Quotations, Orders)
+- Invoicing (Customer Invoices)
+- Inventory (Stock Management)
+
+---
+
+### **7. Post Scheduling** 🕐
+
+**Cloud-Based (Fully Automated)**
+
+**Capabilities:**
+- ✅ Schedule Twitter posts
+- ✅ Schedule Facebook posts
+- ✅ Claude AI enhancement at scheduled time
+- ✅ Auto-generate diagrams at scheduled time
+- ✅ Human approval required
+- ✅ Datetime picker in dashboard
+- ✅ View/cancel scheduled posts
+
+**How It Works:**
+```
+User schedules post → Saved to database → 
+Scheduler checks every 60 seconds → 
+At scheduled time:
+  1. Claude enhances content
+  2. Generates diagram (if keywords detected)
+  3. Creates approval file
+  4. Human approves
+  5. Posts automatically
+```
+
+---
+
+### **8. Diagram Generation** 🎨
+
+**Cloud-Based (100% FREE)**
+
+**Capabilities:**
+- ✅ Auto-detect diagram requests
+- ✅ Mermaid code generation via Claude
+- ✅ Convert Mermaid → PNG
+- ✅ Professional styling with colors
+- ✅ No API costs (completely free)
+
+**Supported Diagrams:**
+- Flowcharts
+- Sequence diagrams
+- Class diagrams
+- Mind maps
+- Marketing funnels
+- Gantt charts
+- Architecture diagrams
+- Process workflows
+
+**Keywords That Trigger Diagrams:**
+```
+diagram, flowchart, workflow, architecture, 
+process, pipeline, graph, funnel, explain,
+how it works
+```
+
+---
+
+### **9. Image Upload** 📷
+
+**Cloud-Based (Fully Automated)**
+
+**Capabilities:**
+- ✅ Upload images via dashboard
+- ✅ Attach images to Facebook posts
+- ✅ Attach images to Twitter posts (manual)
+- ✅ Supports PNG, JPG, GIF
+- ✅ Automatic file management
+
+**Workflow:**
+```
+User uploads image in dashboard → 
+Saved to Post_Images/ folder → 
+Task created with image_path in YAML → 
+Orchestrator reads image_path → 
+Creates approval file with image → 
+Human approves → 
+Posts with image attached
+```
+
+---
+
+## ☁️ CLOUD AUTOMATION
+
+### **Running on Digital Ocean Cloud (24/7)**
+
+| Service | Status | Description |
+|---------|--------|-------------|
+| **Facebook Manager** | ✅ Active | Post creation, scheduling, analytics |
+| **Twitter Manager** | ✅ Active | Tweet creation, scheduling, threads |
+| **Gmail Manager** | ✅ Active | Email sending, auto-replies |
+| **Odoo Manager** | ✅ Active | CRM, Sales, Invoicing |
+| **Scheduler Service** | ✅ Active | Scheduled posts (checks every 60s) |
+| **Orchestrator** | ✅ Active | AI task processing with Claude |
+| **Execute Approved** | ✅ Active | Executes approved actions |
+| **Dashboard** | ✅ Active | Web UI (Port 5000) |
+| **Gmail Watcher** | ✅ Active | Monitors Gmail inbox |
+| **Inbox Watcher** | ✅ Active | Monitors file drops |
+
+### **Cloud Features:**
+- ✅ **24/7 Operation** - Always running
+- ✅ **Auto-Restart** - PM2 process management
+- ✅ **Logging** - Complete audit trail
+- ✅ **Monitoring** - Real-time status
+- ✅ **Scalable** - Easy to upgrade resources
+
+---
+
+## 💻 LOCAL AUTOMATION
+
+### **Running on Local Machine (On-Demand)**
+
+| Service | Status | Description |
+|---------|--------|-------------|
+| **WhatsApp Watcher** | ⚠️ Local Required | WhatsApp Web automation |
+| **LinkedIn Watcher** | ⚠️ Local Required | LinkedIn browser automation |
+| **Claude Code CLI** | ⚠️ Local Required | AI content generation |
+
+### **Why Local Required:**
+
+**WhatsApp:**
+- WhatsApp Web requires active browser session
+- QR code authentication needed
+- Cannot run on cloud without violating ToS
+
+**LinkedIn:**
+- LinkedIn doesn't have public API for posting
+- Uses browser automation (Playwright)
+- Requires active login session
+
+**Claude Code:**
+- Claude Code CLI runs locally
+- Cloud server doesn't have Claude CLI access
+- Uses local Claude subscription
+
+---
+
+## 🏗️ ARCHITECTURE
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -86,7 +320,7 @@ AI Employee Vault is a comprehensive cloud-based automation platform that levera
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │   Facebook   │  │    Twitter   │  │    Email     │          │
+│  │   Facebook   │  │    Twitter   │  │    Gmail     │          │
 │  │   Manager    │  │   Manager    │  │   Manager    │          │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
 │         │                 │                 │                   │
@@ -100,16 +334,14 @@ AI Employee Vault is a comprehensive cloud-based automation platform that levera
 │         ┌─────────────────┼─────────────────┐                   │
 │         │                 │                 │                   │
 │  ┌──────▼───────┐  ┌──────▼───────┐  ┌──────▼───────┐          │
-│  │   LinkedIn   │  │    Odoo      │  │  Dashboard   │          │
-│  │   Manager    │  │   Manager    │  │   (Web UI)   │          │
+│  │   Scheduler  │  │    Odoo      │  │  Dashboard   │          │
+│  │   Service    │  │   Manager    │  │   (Web UI)   │          │
 │  └──────────────┘  └──────────────┘  └──────────────┘          │
 │                                                                 │
-│  ┌─────────────────────────────────────────────────┐           │
-│  │           Scheduler Service (NEW v3.0)          │           │
-│  │  - Checks every 60 seconds for scheduled posts  │           │
-│  │  - Creates approval files at scheduled time     │           │
-│  │  - Uses Claude for content enhancement          │           │
-│  └─────────────────────────────────────────────────┘           │
+│  PM2 Processes (6):                                            │
+│  - orchestrator      - execute-approved                        │
+│  - dashboard         - post-scheduler                          │
+│  - gmail-watcher     - inbox-watcher                           │
 │                                                                 │
 │  Ports: 5000 (Dashboard), 8069 (Odoo)                          │
 └─────────────────────────────────────────────────────────────────┘
@@ -119,10 +351,9 @@ AI Employee Vault is a comprehensive cloud-based automation platform that levera
 ┌──────────────────────────▼──────────────────────────────────────┐
 │                    LOCAL MACHINE (On-Demand)                    │
 ├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │   WhatsApp   │  │   Browser    │  │   Mobile     │          │
-│  │   Session    │  │   Access     │  │   Apps       │          │
+│  │   WhatsApp   │  │   Browser    │  │   Claude     │          │
+│  │   Session    │  │   Access     │  │   Code CLI   │          │
 │  │  (Required)  │  │              │  │              │          │
 │  └──────────────┘  └──────────────┘  └──────────────┘          │
 │                                                                 │
@@ -131,7 +362,7 @@ AI Employee Vault is a comprehensive cloud-based automation platform that levera
 
 ---
 
-## ☁️ Cloud Infrastructure
+## ☁️ CLOUD INFRASTRUCTURE
 
 ### **Hosting Provider: Digital Ocean**
 
@@ -143,17 +374,6 @@ AI Employee Vault is a comprehensive cloud-based automation platform that levera
 | **Storage** | 80GB SSD | Application + Data |
 | **Uptime** | 99.9% SLA | 24/7 Operation |
 
-### **Cloud Services**
-
-| Service | Purpose | Status |
-|---------|---------|--------|
-| **Facebook Graph API** | Post creation, deletion, analytics | ✅ Active |
-| **Twitter API** | Tweet posting (FREE tier: 1,500/month) | ✅ Active |
-| **Gmail API** | Email sending, receiving, management | ✅ Active |
-| **Odoo ERP** | CRM, Sales, Invoicing, Inventory | ✅ Active |
-| **WhatsApp Business** | Message automation (Local Session) | ⚠️ Local Required |
-| **LinkedIn API** | Post automation (Local Session) | ⚠️ Local Required |
-
 ### **PM2 Process Management**
 
 | Process Name | Purpose | Port |
@@ -161,26 +381,25 @@ AI Employee Vault is a comprehensive cloud-based automation platform that levera
 | **dashboard** | Web dashboard (Flask) | 5000 |
 | **orchestrator** | AI task processing | - |
 | **execute-approved** | Execute approved actions | - |
-| **post-scheduler** | Scheduled post processing (NEW) | - |
+| **post-scheduler** | Scheduled post processing | - |
 | **gmail-watcher** | Gmail inbox monitoring | - |
 | **inbox-watcher** | General inbox monitoring | - |
 
 ---
 
-## 🌐 Access URLs
+## 🌐 ACCESS URLs
 
 ### **Production Environment**
 
 | Service | URL | Credentials | Purpose |
 |---------|-----|-------------|---------|
 | **Dashboard** | http://167.71.237.77:5000 | Admin | Main automation control panel |
-| **Odoo ERP** | http://167.71.237.77:8069 | admin / admin | ERP system (CRM, Sales, etc.) |
+| **Odoo ERP** | http://167.71.237.77:8069 | admin / admin | ERP system |
 | **PM2 Monitor** | SSH Access | root | Process monitoring |
 
 ### **Access Instructions**
 
 #### **1. Dashboard Access**
-
 ```
 URL: http://167.71.237.77:5000
 Username: admin
@@ -190,33 +409,17 @@ Password: [Contact Admin]
 **Features:**
 - Create and manage automation tasks
 - Schedule Twitter & Facebook posts
+- Upload images with posts
 - Approve/reject pending actions
 - View execution logs and analytics
 - Monitor system health
 
-#### **2. Odoo ERP Access**
-
-```
-URL: http://167.71.237.77:8069
-Username: admin
-Password: admin
-Database: ai_employee_db
-```
-
-**Modules Available:**
-- CRM (Customer Relationship Management)
-- Sales (Quotations, Orders)
-- Invoicing (Customer Invoices)
-- Inventory (Stock Management)
-- Accounting (Financial Reports)
-
-#### **3. SSH Access (Admin Only)**
-
+#### **2. SSH Access (Admin Only)**
 ```bash
 ssh -i "your-private-key.pem" root@167.71.237.77
 ```
 
-**Commands:**
+**Common Commands:**
 ```bash
 # Check system status
 pm2 status
@@ -237,222 +440,7 @@ df -h
 
 ---
 
-## ✨ Features
-
-### **1. Facebook Automation** 📘
-
-**Capabilities:**
-- ✅ Create posts with AI-generated content
-- ✅ Schedule posts for later
-- ✅ Delete posts by ID
-- ✅ Reply to comments automatically
-- ✅ Hide inappropriate comments
-- ✅ Lead detection from comments
-- ✅ Post analytics and insights
-- ✅ Odoo CRM integration for leads
-
-**Approval Workflow:**
-```
-User Creates Post → AI Generates Content → Pending Approval →
-Human Approval → Execute → Posted to Facebook → Done
-```
-
-**Scheduling Workflow:**
-```
-User Schedules Post → Save to Database → Scheduler Checks Every 60s →
-At Scheduled Time: Claude Enhances Content → Create Approval →
-Human Approval → Execute → Posted to Facebook → Done
-```
-
-**API Endpoints:**
-```
-POST /api/facebook/post      - Create post
-POST /api/facebook/schedule  - Schedule post (NEW)
-GET  /api/facebook/posts     - Get recent posts
-GET  /api/facebook/analytics - Get analytics
-GET  /api/facebook/comments  - Get comments
-```
-
----
-
-### **2. Twitter Automation** 🐦 (NEW v3.0)
-
-**Capabilities:**
-- ✅ Create tweets with Claude AI enhancement
-- ✅ Schedule tweets for specific dates/times
-- ✅ Thread creation (multi-tweet posts)
-- ✅ Professional content generation
-- ✅ Hashtag optimization
-- ✅ Profile information viewing
-- ✅ Recent tweets display
-- ✅ FREE posting via twitter.com/intent/tweet
-
-**Approval Workflow:**
-```
-User Creates Tweet → Claude Enhances Content → Pending Approval →
-Human Approval → Opens Twitter → User Clicks Tweet → Posted
-```
-
-**Scheduling Workflow:**
-```
-User Schedules Tweet → Save to Database → Scheduler Checks Every 60s →
-At Scheduled Time: Claude Enhances → Create Approval →
-Human Approval → Opens Twitter → User Clicks Tweet → Posted
-```
-
-**API Endpoints:**
-```
-POST /api/twitter/post       - Create tweet
-POST /api/twitter/schedule   - Schedule tweet (NEW)
-GET  /api/twitter/tweets     - Get recent tweets
-GET  /api/twitter/profile    - Get profile info
-```
-
-**Twitter API Limits (FREE Tier):**
-- 1,500 tweets per month
-- No reading capabilities (payment required)
-- Solution: Use twitter.com/intent/tweet for 100% FREE posting
-
----
-
-### **3. Email Automation** 📧
-
-**Capabilities:**
-- ✅ Send emails via Gmail API
-- ✅ Auto-reply to incoming emails
-- ✅ Email templates and drafts
-- ✅ Attachment support
-- ✅ Email threading
-- ✅ Delivery tracking
-
-**Approval Workflow:**
-```
-Incoming Email → AI Drafts Response → Pending Approval →
-Human Review → Send via Gmail → Logged
-```
-
-**Integration:**
-- Gmail API (OAuth 2.0)
-- SMTP fallback
-- Custom domain support
-
----
-
-### **4. WhatsApp Automation** 💬
-
-**Capabilities:**
-- ✅ Send messages to contacts
-- ✅ Auto-reply to messages
-- ✅ Group messaging
-- ✅ Media support (images, documents)
-- ✅ Message scheduling
-
-**Architecture:**
-```
-Cloud: Message queuing, AI content generation
-Local: WhatsApp Web session (required for sending)
-```
-
-**Note:** WhatsApp requires local browser session for authentication due to WhatsApp Web security.
-
----
-
-### **5. LinkedIn Automation** 🔗
-
-**Capabilities:**
-- ✅ Create professional posts
-- ✅ Auto-generate content with AI
-- ✅ Hashtag optimization
-- ✅ Post scheduling
-- ✅ Engagement tracking
-
-**Architecture:**
-```
-Cloud: Content generation, approval workflow
-Local: LinkedIn session (for posting)
-```
-
----
-
-### **6. Odoo ERP Integration** 🏢
-
-**Capabilities:**
-- ✅ Lead creation and management
-- ✅ Customer management
-- ✅ Sales quotations
-- ✅ Invoice generation
-- ✅ Inventory tracking
-- ✅ Financial reporting
-
-**Modules:**
-```
-CRM Module:
-- Lead tracking
-- Opportunity management
-- Pipeline visualization
-- Facebook lead integration
-
-Sales Module:
-- Quotation creation
-- Order processing
-- Customer portal
-
-Invoicing Module:
-- Invoice generation
-- Payment tracking
-- Financial reports
-
-Inventory Module:
-- Stock management
-- Product tracking
-- Warehouse operations
-```
-
----
-
-### **7. Post Scheduling** 🕐 (NEW v3.0)
-
-**Capabilities:**
-- ✅ Schedule Twitter posts
-- ✅ Schedule Facebook posts
-- ✅ Claude AI enhancement at scheduled time
-- ✅ Human approval still required
-- ✅ Datetime picker in dashboard
-- ✅ View all scheduled posts
-- ✅ Cancel scheduled posts
-
-**How It Works:**
-```
-1. User creates post in dashboard
-2. Selects "Schedule" tab
-3. Enters content and picks datetime
-4. Saved to SQLite database
-5. Scheduler checks every 60 seconds
-6. At scheduled time:
-   - Claude generates professional content
-   - Creates approval file in Pending Approval/
-7. Human reviews and approves
-8. execute_approved.py posts automatically
-```
-
-**Database Schema:**
-```sql
-CREATE TABLE scheduled_posts (
-    id INTEGER PRIMARY KEY,
-    platform TEXT,           -- 'twitter' or 'facebook'
-    content TEXT,
-    scheduled_time DATETIME,
-    status TEXT,             -- pending, processed, failed
-    created_at DATETIME,
-    approval_file TEXT,
-    hashtags TEXT,
-    is_thread INTEGER
-);
-```
-
----
-
-## 🚀 Installation
+## 🚀 INSTALLATION
 
 ### **Prerequisites**
 
@@ -543,7 +531,7 @@ pm2 restart all
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ CONFIGURATION
 
 ### **Environment Variables (.env)**
 
@@ -575,95 +563,157 @@ LOGS_DIR=/home/ai-employee-vault/logs
 
 ---
 
-## 📊 Dashboard Features
+## 📖 SKILLS & DOCUMENTATION
 
-### **Twitter Management Section**
-- ✍️ **Create Post** - Create tweets with Claude enhancement
-- 🕐 **Schedule Post** - Schedule tweets for later
-- 📝 **Recent Tweets** - View recent tweets and engagement
-- ℹ️ **Profile** - View Twitter profile information
+### **Claude Skills** (In `.claude/skills/` folder)
 
-### **Facebook Management Section**
-- ✍️ **Create Post** - Create posts with Claude enhancement
-- 🕐 **Schedule Post** - Schedule posts for later
-- 📝 **Manage Posts** - View and manage Facebook posts
-- 📊 **Analytics** - View page insights and metrics
-- ℹ️ **Page Info** - View Facebook page details
+| Skill | Purpose | Use For |
+|-------|---------|---------|
+| **enterprise_saas_extension.md** | Enterprise transformation guide | Future SaaS development |
+| **complete_system_documentation.md** | Full system documentation | Onboarding, troubleshooting |
+| **facebook_automation.md** | Facebook API guide | Facebook automation |
+| **twitter_automation.md** | Twitter API guide | Twitter automation |
 
-### **Scheduling UI**
-- Datetime picker for easy scheduling
-- Timezone-aware scheduling
-- View all scheduled posts
-- Cancel scheduled posts
-- Success/error notifications
+### **How to Use Skills**
+
+```
+@enterprise_saas_extension Show me Phase 1 implementation
+@complete_system_documentation How does Gmail watcher work?
+@facebook_automation How to create posts with images?
+@twitter_automation How to schedule tweets?
+```
+
+### **Additional Documentation**
+
+| Document | Purpose |
+|----------|---------|
+| `SCHEDULING_IMPLEMENTATION.md` | Scheduling feature guide |
+| `MERMAID_DIAGRAM_IMPLEMENTATION.md` | Diagram generation guide |
+| `IMAGE_UPLOAD_COMPLETE.md` | Image upload guide |
+| `DEPLOYMENT_QUICK_START.md` | Quick deployment guide |
 
 ---
 
-## 🔧 Troubleshooting
+## 🔧 TROUBLESHOOTING
 
-### **Scheduler Not Running**
+### **Common Issues**
 
+#### **1. Orchestrator Not Processing Tasks**
+
+**Symptoms:**
+- Tasks in Needs Action/ not being processed
+- No logs from orchestrator
+
+**Solution:**
 ```bash
-# Check PM2 status
+# Check if orchestrator is running
+pm2 status orchestrator
+
+# If stopped, start it
+pm2 start orchestrator
+
+# Check logs for errors
+pm2 logs orchestrator --lines 100
+```
+
+#### **2. Images Not Posting to Facebook**
+
+**Symptoms:**
+- Logs show "Posting text only"
+- Image exists in Post_Images/
+
+**Solution:**
+```bash
+# Check if image_path in approval file
+cat Approved/APPROVAL_facebook_post_*.md | grep image_path
+
+# Restart execute-approved
+pm2 restart execute-approved
+```
+
+#### **3. Scheduler Not Running**
+
+**Symptoms:**
+- Scheduled posts not being processed
+- No logs from post-scheduler
+
+**Solution:**
+```bash
+# Check if scheduler is running
 pm2 status post-scheduler
 
-# View logs
-pm2 logs post-scheduler
+# Check server time (timezone issue)
+date
+timedatectl
+
+# Fix timezone if needed
+timedatectl set-timezone Asia/Karachi
 
 # Restart scheduler
 pm2 restart post-scheduler
 ```
 
-### **Claude Not Enhancing Scheduled Posts**
+#### **4. Emoji Encoding Broken**
 
-```bash
-# Check Claude CLI path
-which claude
+**Symptoms:**
+- Emojis showing as `ðŸš€` instead of `🚀`
 
-# Test Claude
-claude -p "Hello"
-
-# Update path in scheduler if needed
-# scheduler/twitter_scheduler.py
-# scheduler/facebook_scheduler.py
-```
-
-### **Scheduled Posts Not Posting**
-
-```bash
-# Check scheduler logs
-pm2 logs post-scheduler --lines 100
-
-# Check database
-cd /home/ai-employee-vault
-python3 -c "from scheduler.scheduler_db import get_pending_posts; print(get_pending_posts())"
-
-# Verify time synchronization
-timedatectl
+**Solution:**
+```python
+# In orchestrator.py, ensure UTF-8 encoding
+result = subprocess.run(
+    [claude_path, '-p'],
+    input=claude_prompt,
+    capture_output=True,
+    text=True,
+    timeout=120,
+    shell=True,
+    encoding='utf-8',
+    errors='replace'
+)
 ```
 
 ---
 
-## 📚 Additional Documentation
+## 🛠️ SUPPORT
 
-- [SCHEDULING_IMPLEMENTATION.md](./SCHEDULING_IMPLEMENTATION.md) - Complete scheduling guide
-- [SCHEDULING_CLAUDE_FIX.md](./SCHEDULING_CLAUDE_FIX.md) - Claude integration for scheduling
-- [TWITTER_OAUTH1_SETUP.md](./TWITTER_OAUTH1_SETUP.md) - Twitter OAuth setup
-- [DEPLOYMENT_QUICK_START.md](./DEPLOYMENT_QUICK_START.md) - Quick deployment guide
+### **Getting Help**
+
+1. **Check Documentation:**
+   - Read skills in `.claude/skills/` folder
+   - Review troubleshooting section
+   - Check implementation guides
+
+2. **View Logs:**
+   ```bash
+   pm2 logs --lines 100
+   ```
+
+3. **Contact Support:**
+   - Email: support@aiemployeevault.com
+   - Slack: #ai-employee-vault
+   - GitHub Issues: Create issue with logs
 
 ---
 
-## 🛠️ Support
+## 📊 CURRENT STATUS
 
-For issues, questions, or feature requests, please contact the development team.
-
-**Development Team:**
-- Lead Developer: [Your Name]
-- Email: [your.email@example.com]
-- Slack: #ai-employee-vault
+| Feature | Cloud | Local | Status |
+|---------|-------|-------|--------|
+| **Facebook Posts** | ✅ | - | Fully Automated |
+| **Facebook Scheduling** | ✅ | - | Fully Automated |
+| **Twitter Posts** | ✅ | - | Semi-Automated |
+| **Twitter Scheduling** | ✅ | - | Fully Automated |
+| **Email (Gmail)** | ✅ | - | Fully Automated |
+| **WhatsApp** | - | ✅ | Local Session Required |
+| **LinkedIn** | - | ✅ | Local Session Required |
+| **Odoo CRM** | ✅ | - | Fully Automated |
+| **Diagram Generation** | ✅ | - | Fully Automated |
+| **Image Upload** | ✅ | - | Fully Automated |
+| **Scheduling** | ✅ | - | Fully Automated |
 
 ---
 
-**Version:** 3.0.0  
+**Version:** 4.0 (Production Ready)  
 **Last Updated:** March 2026  
-**Status:** Production Ready ✅
+**Status:** Cloud-Deployed ✅ | Production-Ready ✅
