@@ -84,10 +84,22 @@ def parse_markdown_file(filepath):
             task_type = 'email_approval'
         elif filename.startswith('LINKEDIN_POST'):
             task_type = 'linkedin_post'
+        elif filename.startswith('APPROVAL_facebook'):
+            task_type = 'facebook_approval'
+        elif filename.startswith('APPROVAL_twitter'):
+            task_type = 'twitter_approval'
+        elif filename.startswith('ODOO_LEAD'):
+            task_type = 'odoo_lead'
 
         # Extract key information from body
         lines = body.split('\n')
-        title = lines[0].strip('# ') if lines else filename
+        
+        # For approval files, use filename as title for better display
+        # Otherwise use first line of body
+        if filename.startswith('APPROVAL_') or filename.startswith('ODOO_LEAD'):
+            title = filename.replace('.md', '').replace('_', ' ')
+        else:
+            title = lines[0].strip('# ') if lines else filename
 
         # Extract metadata from markdown
         metadata = {
@@ -1212,6 +1224,487 @@ def update_dashboard_completed(filename):
         DASHBOARD_MD.write_text(content, encoding='utf-8')
     except Exception as e:
         print(f"Error updating dashboard: {e}")
+
+
+# ============================================
+# GOOGLE WORKSPACE API ENDPOINTS
+# ============================================
+
+@app.route('/api/google/calendar/create', methods=['POST'])
+def create_calendar_event_new():
+    """Create calendar event with Google Meet link (new endpoint for dashboard form)"""
+    try:
+        from services.google import GoogleCalendarService
+        
+        data = request.json
+        title = data.get('title', 'Meeting')
+        description = data.get('description', '')
+        start_time = data.get('start_time')
+        end_time = data.get('end_time')
+        attendees = data.get('attendees', '')
+        meet_link = data.get('meet_link', '')
+        
+        logger.info(f"Calendar API called with: start={start_time}, end={end_time}")
+        
+        if not all([start_time, end_time]):
+            return jsonify({'error': 'Start time and end time required'}), 400
+        
+        # Parse attendees from comma-separated string
+        attendee_list = [a.strip() for a in attendees.split(',') if a.strip()] if attendees else []
+        
+        calendar = GoogleCalendarService()
+        result = calendar.create_event(
+            summary=title,
+            description=description,
+            start_time=start_time,
+            end_time=end_time,
+            attendees=attendee_list
+        )
+        
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'message': 'Event created successfully',
+                'event': result,
+                'meet_link': meet_link or result.get('meet_link', '')
+            })
+        else:
+            logger.error(f"Calendar creation failed: {result.get('error')}")
+            return jsonify({'error': result['error']}), 500
+    
+    except Exception as e:
+        logger.error(f"Calendar event creation error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/calendar/create-event', methods=['POST'])
+def create_calendar_event():
+    """Create calendar event with Google Meet link (legacy endpoint)"""
+    try:
+        from services.google import GoogleCalendarService
+        
+        data = request.json
+        summary = data.get('summary', 'Meeting')
+        description = data.get('description', '')
+        start_time = data.get('start_time')
+        end_time = data.get('end_time')
+        attendees = data.get('attendees', [])
+        
+        if not all([start_time, end_time]):
+            return jsonify({'error': 'Start time and end time required'}), 400
+        
+        calendar = GoogleCalendarService()
+        result = calendar.create_event(
+            summary=summary,
+            description=description,
+            start_time=start_time,
+            end_time=end_time,
+            attendees=attendees
+        )
+        
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'message': 'Event created successfully',
+                'event': result
+            })
+        else:
+            return jsonify({'error': result['error']}), 500
+    
+    except Exception as e:
+        logger.error(f"Calendar event creation error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/calendar/upcoming', methods=['GET'])
+def get_upcoming_events():
+    """Get upcoming calendar events"""
+    try:
+        from services.google import GoogleCalendarService
+        
+        days = request.args.get('days', 7, type=int)
+        
+        calendar = GoogleCalendarService()
+        result = calendar.get_upcoming_events(days=days)
+        
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'events': result['events']
+            })
+        else:
+            return jsonify({'error': result['error']}), 500
+    
+    except Exception as e:
+        logger.error(f"Get events error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/drive/create-folder', methods=['POST'])
+def create_drive_folder():
+    """Create folder in Google Drive"""
+    try:
+        from services.google import GoogleDriveService
+        
+        data = request.json
+        folder_name = data.get('name', 'New Folder')
+        parent_id = data.get('parent_id')
+        
+        drive = GoogleDriveService()
+        result = drive.create_folder(folder_name, parent_id)
+        
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'message': 'Folder created successfully',
+                'folder': result
+            })
+        else:
+            return jsonify({'error': result['error']}), 500
+    
+    except Exception as e:
+        logger.error(f"Drive folder creation error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/docs/create', methods=['POST'])
+def create_google_doc():
+    """Create Google Doc"""
+    try:
+        from services.google import GoogleDocsService
+        
+        data = request.json
+        title = data.get('title', 'Untitled Document')
+        content = data.get('content', '')
+        
+        docs = GoogleDocsService()
+        result = docs.create_document(title, content)
+        
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'message': 'Document created successfully',
+                'document': result
+            })
+        else:
+            return jsonify({'error': result['error']}), 500
+    
+    except Exception as e:
+        logger.error(f"Docs creation error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/sheets/create', methods=['POST'])
+def create_google_sheet():
+    """Create Google Sheet"""
+    try:
+        from services.google import GoogleSheetsService
+        
+        data = request.json
+        title = data.get('title', 'Untitled Spreadsheet')
+        data_rows = data.get('data', [])
+        
+        sheets = GoogleSheetsService()
+        result = sheets.create_spreadsheet(title, data_rows)
+        
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'message': 'Spreadsheet created successfully',
+                'spreadsheet': result
+            })
+        else:
+            return jsonify({'error': result['error']}), 500
+    
+    except Exception as e:
+        logger.error(f"Sheets creation error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/sheets/import', methods=['POST'])
+def import_google_sheet_data():
+    """Import data to Google Sheet"""
+    try:
+        from services.google import GoogleSheetsService
+        
+        if 'import_file' not in request.files:
+            return jsonify({'error': 'No file provided'}), 400
+        
+        file = request.files['import_file']
+        target_sheet = request.form.get('target_sheet', '')
+        
+        # Save uploaded file temporarily
+        import os
+        temp_path = f"/tmp/{file.filename}"
+        file.save(temp_path)
+        
+        # Read file based on extension
+        import pandas as pd
+        if file.filename.endswith('.csv'):
+            df = pd.read_csv(temp_path)
+        else:
+            df = pd.read_excel(temp_path)
+        
+        # Convert to list of lists
+        data = df.values.tolist()
+        
+        # Import to sheet
+        sheets = GoogleSheetsService()
+        result = sheets.import_data(target_sheet, data)
+        
+        # Clean up temp file
+        os.remove(temp_path)
+        
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'message': 'Data imported successfully',
+                'rows': len(data)
+            })
+        else:
+            return jsonify({'error': result['error']}), 500
+            
+    except Exception as e:
+        logger.error(f"Sheets import error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/meet/schedule', methods=['POST'])
+def schedule_google_meet():
+    """Schedule Google Meet meeting"""
+    try:
+        from services.google import GoogleCalendarService, GoogleMeetService
+        
+        data = request.json
+        title = data.get('title', 'Meeting')
+        description = data.get('description', '')
+        start_time = data.get('start_time')
+        end_time = data.get('end_time')
+        participants = data.get('participants', '').split(',') if data.get('participants') else []
+        agenda = data.get('agenda', '')
+        create_calendar = data.get('create_calendar', True)
+        send_invites = data.get('send_invites', True)
+        
+        # Create Meet link
+        meet = GoogleMeetService()
+        meet_result = meet.create_meet(title, description)
+        
+        if not meet_result['success']:
+            return jsonify({'error': meet_result['error']}), 500
+        
+        meet_link = meet_result['meet_link']
+        
+        # Create calendar event if requested
+        if create_calendar:
+            calendar = GoogleCalendarService()
+            calendar_result = calendar.create_event(
+                title=title,
+                description=f"{description}\n\nAgenda:\n{agenda}\n\nJoin Meet: {meet_link}",
+                start_time=start_time,
+                end_time=end_time,
+                attendees=participants
+            )
+            
+            if not calendar_result['success']:
+                logger.warning(f"Calendar event creation failed: {calendar_result['error']}")
+        
+        return jsonify({
+            'success': True,
+            'message': 'Meeting scheduled successfully',
+            'meet_link': meet_link,
+            'calendar_event': calendar_result if create_calendar else None
+        })
+        
+    except Exception as e:
+        logger.error(f"Meet scheduling error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/docs/parse-resume', methods=['POST'])
+def parse_resume():
+    """Parse resume and create approval task"""
+    try:
+        if 'resume_file' not in request.files:
+            return jsonify({'error': 'No resume file provided'}), 400
+        
+        file = request.files['resume_file']
+        save_to = request.form.get('save_to', 'odoo')
+        
+        # Save uploaded file - ensure folder exists
+        import os
+        upload_folder = BASE_DIR / "Uploads" / "Resumes"
+        upload_folder.mkdir(parents=True, exist_ok=True)  # Create parent folders if needed
+        
+        filename = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{file.filename}"
+        file_path = upload_folder / filename
+        file.save(str(file_path))
+        
+        # Create approval task for resume parsing
+        from pathlib import Path as FilePath
+        task_filename = f"resume_parse_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
+        task_filepath = NEEDS_ACTION / task_filename
+        
+        task_content = f"""---
+type: resume_parse
+action: parse_resume
+save_to: {save_to}
+resume_file: {file_path}
+---
+
+# Resume Parsing Request
+
+## File Details
+
+**Original File:** {file.filename}
+**Saved To:** {file_path}
+**Parse To:** {save_to}
+
+## Action Required
+
+Parse resume and extract:
+- Name
+- Email
+- Phone
+- Skills
+- Experience
+- Education
+
+## Save To
+
+{'✅ Odoo CRM (Create Lead)' if save_to == 'odoo' else '✅ Google Sheets' if save_to == 'sheets' else '✅ Google Doc'}
+"""
+        
+        task_filepath.write_text(task_content, encoding='utf-8')
+        
+        return jsonify({
+            'success': True,
+            'message': 'Resume uploaded for parsing! Check Pending Approval.',
+            'task_file': task_filename
+        })
+        
+    except Exception as e:
+        logger.error(f"Resume parse error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/google/drive/process', methods=['POST'])
+def process_google_drive():
+    """Process Google Drive operations"""
+    try:
+        from services.google import GoogleDriveService
+        
+        action = request.form.get('action', 'create_folder')
+        drive = GoogleDriveService()
+        
+        if action == 'create_folder':
+            folder_name = request.form.get('folder_name', 'New Folder')
+            parent_folder = request.form.get('parent_folder', None)
+            
+            result = drive.create_folder(folder_name, parent_folder if parent_folder else None)
+            
+            if result['success']:
+                return jsonify({
+                    'success': True,
+                    'message': f"Folder '{folder_name}' created successfully",
+                    'folder': result
+                })
+            else:
+                return jsonify({'error': result['error']}), 500
+                
+        elif action == 'upload_file':
+            if 'file' not in request.files:
+                return jsonify({'error': 'No file provided'}), 400
+            
+            file = request.files['file']
+            upload_folder = request.form.get('upload_folder', None)
+            
+            # Save file temporarily
+            import os
+            temp_path = f"/tmp/{file.filename}"
+            file.save(temp_path)
+            
+            # Upload to Drive
+            result = drive.upload_file(temp_path, parent_id=upload_folder)
+            
+            # Clean up
+            os.remove(temp_path)
+            
+            if result['success']:
+                return jsonify({
+                    'success': True,
+                    'message': f"File '{file.filename}' uploaded successfully",
+                    'file': result
+                })
+            else:
+                return jsonify({'error': result['error']}), 500
+                
+        elif action == 'organize':
+            source_folder = request.form.get('source_folder', '')
+            organize_by = request.form.get('organize_by', 'date')
+            
+            # Create approval task for organizing
+            task_filename = f"drive_organize_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
+            task_filepath = NEEDS_ACTION / task_filename
+            
+            task_content = f"""---
+type: drive_organize
+action: organize_files
+source_folder: {source_folder}
+organize_by: {organize_by}
+---
+
+# Drive Organization Request
+
+## Details
+
+**Source Folder:** {source_folder}
+**Organize By:** {organize_by.title()}
+
+## Action Required
+
+Organize files in the specified folder by {organize_by}.
+
+## Approval
+
+Move to Approved/ to execute organization.
+"""
+            
+            task_filepath.write_text(task_content, encoding='utf-8')
+            
+            return jsonify({
+                'success': True,
+                'message': 'Organization task created! Check Needs Action folder.'
+            })
+        
+        return jsonify({'error': 'Unknown action'}), 400
+        
+    except Exception as e:
+        logger.error(f"Drive process error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/workflows/daily-report/generate', methods=['POST'])
+def generate_daily_report_now():
+    """Generate daily business report immediately"""
+    try:
+        from scheduler.main_scheduler import generate_daily_report
+        
+        # Run report generation
+        result = generate_daily_report()
+        
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'message': 'Daily report generated!',
+                'doc_link': result.get('doc_link'),
+                'email_sent': result.get('email_sent', False)
+            })
+        else:
+            return jsonify({'error': result.get('error', 'Failed to generate report')}), 500
+            
+    except Exception as e:
+        logger.error(f"Daily report generation error: {e}")
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

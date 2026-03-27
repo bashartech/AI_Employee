@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Employee Vault - Enterprise Dashboard</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --danger-gradient: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-color: #667eea;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 350px;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+            padding: 20px;
+            height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text .version {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .header-stat {
+            text-align: center;
+            padding: 10px 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .header-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .header-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Left Sidebar - Navigation */
+        .left-sidebar {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-section {
+            margin-bottom: 30px;
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background: var(--primary-gradient);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .nav-badge.hot {
+            background: var(--danger-gradient);
+        }
+
+        .nav-badge.warning {
+            background: var(--warning-gradient);
+        }
+
+        .nav-badge.success {
+            background: var(--success-gradient);
+        }
+
+        /* Center Content */
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        /* Stats Cards */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card.success::before {
+            background: var(--success-gradient);
+        }
+
+        .stat-card.warning::before {
+            background: var(--warning-gradient);
+        }
+
+        .stat-card.danger::before {
+            background: var(--danger-gradient);
+        }
+
+        .stat-card-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-card-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .stat-card-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .stat-card-trend.up {
+            color: #38ef7d;
+        }
+
+        .stat-card-trend.down {
+            color: #f45c43;
+        }
+
+        /* Main Content Cards */
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        /* Watchers Grid */
+        .watchers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .watcher-card {
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .watcher-card:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.4);
+            transform: scale(1.02);
+        }
+
+        .watcher-card.active {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .watcher-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .watcher-icon {
+            font-size: 1.5rem;
+        }
+
+        .watcher-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .watcher-status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.online {
+            background: #38ef7d;
+        }
+
+        .status-dot.offline {
+            background: #f45c43;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .watcher-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .watcher-stat {
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .watcher-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .watcher-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Right Sidebar - Activity Feed */
+        .right-sidebar {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .activity-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border-left: 3px solid var(--accent-color);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .activity-icon {
+            font-size: 1.2rem;
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            height: fit-content;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-meta {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .activity-tag {
+            padding: 3px 8px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .skill-icon {
+            font-size: 1.5rem;
+        }
+
+        .skill-info {
+            flex: 1;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .skill-progress {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .skill-count {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        /* Logs Console */
+        .logs-console {
+            background: #0a0f1a;
+            border-radius: 12px;
+            padding: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--card-border);
+        }
+
+        .log-entry {
+            display: flex;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .log-time {
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .log-level {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+
+        .log-level.info {
+            background: rgba(79, 172, 254, 0.2);
+            color: #4facfe;
+        }
+
+        .log-level.success {
+            background: rgba(56, 239, 125, 0.2);
+            color: #38ef7d;
+        }
+
+        .log-level.warning {
+            background: rgba(245, 87, 108, 0.2);
+            color: #f5576c;
+        }
+
+        .log-level.error {
+            background: rgba(235, 51, 73, 0.2);
+            color: #eb3349;
+        }
+
+        .log-message {
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .dashboard-grid {
+                grid-template-columns: 250px 1fr;
+            }
+            
+            .right-sidebar {
+                grid-column: 1 / -1;
+                grid-row: 2;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .watchers-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .watchers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.2);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Tab System */
+        .tab-container {
+            margin-bottom: 20px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <div class="dashboard-grid">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="logo-section">
+                <div class="logo-icon">🤖</div>
+                <div class="logo-text">
+                    <h1>AI EMPLOYEE VAULT</h1>
+                    <div class="version">Enterprise Edition v3.0</div>
+                </div>
+            </div>
+
+            <div class="header-stats">
+                <div class="header-stat">
+                    <div class="header-stat-value" id="headerTasksToday">0</div>
+                    <div class="header-stat-label">Tasks Today</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value" id="headerSuccessRate">100%</div>
+                    <div class="header-stat-label">Success Rate</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value" id="headerActiveWatchers">0</div>
+                    <div class="header-stat-label">Active Watchers</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value" id="headerSystemStatus" style="color: #38ef7d;">●</div>
+                    <div class="header-stat-label">System Status</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Left Sidebar - Navigation -->
+        <aside class="left-sidebar">
+            <div class="nav-section">
+                <div class="nav-section-title">Main Menu</div>
+                <div class="nav-item active" onclick="switchTab('overview')">
+                    <div class="nav-icon">📊</div>
+                    <div class="nav-label">Overview</div>
+                </div>
+                <div class="nav-item" onclick="switchTab('watchers')">
+                    <div class="nav-icon">👁️</div>
+                    <div class="nav-label">Watchers</div>
+                    <div class="nav-badge hot" id="watchersBadge">5</div>
+                </div>
+                <div class="nav-item" onclick="switchTab('skills')">
+                    <div class="nav-icon">⚡</div>
+                    <div class="nav-label">Skills</div>
+                    <div class="nav-badge success" id="skillsBadge">8</div>
+                </div>
+                <div class="nav-item" onclick="switchTab('analytics')">
+                    <div class="nav-icon">📈</div>
+                    <div class="nav-label">Analytics</div>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Automation</div>
+                <div class="nav-item" onclick="switchTab('hr-automation')">
+                    <div class="nav-icon">👥</div>
+                    <div class="nav-label">HR Automation</div>
+                    <div class="nav-badge warning" id="hrBadge">0</div>
+                </div>
+                <div class="nav-item" onclick="switchTab('support')">
+                    <div class="nav-icon">🎧</div>
+                    <div class="nav-label">Customer Support</div>
+                    <div class="nav-badge warning" id="supportBadge">0</div>
+                </div>
+                <div class="nav-item" onclick="switchTab('social')">
+                    <div class="nav-icon">📱</div>
+                    <div class="nav-label">Social Media</div>
+                    <div class="nav-badge warning" id="socialBadge">0</div>
+                </div>
+                <div class="nav-item" onclick="switchTab('odoo')">
+                    <div class="nav-icon">🗄️</div>
+                    <div class="nav-label">Odoo CRM</div>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">System</div>
+                <div class="nav-item" onclick="switchTab('logs')">
+                    <div class="nav-icon">📜</div>
+                    <div class="nav-label">Logs</div>
+                </div>
+                <div class="nav-item" onclick="switchTab('activity')">
+                    <div class="nav-icon">🔔</div>
+                    <div class="nav-label">Activity</div>
+                </div>
+                <div class="nav-item" onclick="switchTab('settings')">
+                    <div class="nav-icon">⚙️</div>
+                    <div class="nav-label">Settings</div>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">System Resources</div>
+                <div class="resource-item" style="margin-bottom: 15px;">
+                    <div class="resource-label" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span><i class="fas fa-microchip"></i> CPU</span>
+                        <span id="cpuPercent">0%</span>
+                    </div>
+                    <div class="progress-bar" style="height: 8px; background: rgba(0,0,0,0.3); border-radius: 4px;">
+                        <div class="progress-fill cpu" id="cpuBar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 4px; transition: width 0.5s ease;"></div>
+                    </div>
+                </div>
+                <div class="resource-item" style="margin-bottom: 15px;">
+                    <div class="resource-label" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span><i class="fas fa-memory"></i> Memory</span>
+                        <span id="memoryPercent">0%</span>
+                    </div>
+                    <div class="progress-bar" style="height: 8px; background: rgba(0,0,0,0.3); border-radius: 4px;">
+                        <div class="progress-fill memory" id="memoryBar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-radius: 4px; transition: width 0.5s ease;"></div>
+                    </div>
+                </div>
+                <div class="resource-item" style="margin-bottom: 15px;">
+                    <div class="resource-label" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span><i class="fas fa-hdd"></i> Disk</span>
+                        <span id="diskPercent">0%</span>
+                    </div>
+                    <div class="progress-bar" style="height: 8px; background: rgba(0,0,0,0.3); border-radius: 4px;">
+                        <div class="progress-fill disk" id="diskBar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 4px; transition: width 0.5s ease;"></div>
+                    </div>
+                </div>
+                <div class="uptime-display" style="text-align: center; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+                    <div class="uptime-label" style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase;">System Uptime</div>
+                    <div class="uptime-value" id="systemUptime" style="font-size: 1.2rem; font-weight: 700; color: var(--accent-color); margin-top: 5px;">--:--:--</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Content -->
+        <main class="center-content">
+            <!-- Overview Tab -->
+            <div id="tab-overview" class="tab-content active">
+                <!-- Stats Row -->
+                <section class="stats-row">
+                    <div class="stat-card success">
+                        <div class="stat-card-icon">✅</div>
+                        <div class="stat-card-value" id="statDone">0</div>
+                        <div class="stat-card-label">Completed Today</div>
+                        <div class="stat-card-trend up">
+                            <i class="fas fa-arrow-up"></i> 12%
+                        </div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-card-icon">⏳</div>
+                        <div class="stat-card-value" id="statPending">0</div>
+                        <div class="stat-card-label">Pending Approval</div>
+                        <div class="stat-card-trend down">
+                            <i class="fas fa-arrow-down"></i> 5%
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">📥</div>
+                        <div class="stat-card-value" id="statNeedsAction">0</div>
+                        <div class="stat-card-label">Needs Action</div>
+                        <div class="stat-card-trend up">
+                            <i class="fas fa-arrow-up"></i> 8%
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">📊</div>
+                        <div class="stat-card-value" id="statTotal">0</div>
+                        <div class="stat-card-label">Total Processed</div>
+                        <div class="stat-card-trend">
+                            <i class="fas fa-minus"></i> 0%
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Watchers Grid -->
+                <section class="content-card" style="margin-top: 20px;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-eye"></i>
+                            Active Watchers
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary" onclick="refreshWatchers()">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="watchers-grid">
+                        <!-- Gmail Watcher -->
+                        <div class="watcher-card active">
+                            <div class="watcher-header">
+                                <div class="watcher-icon">📧</div>
+                                <div class="watcher-name">Gmail Watcher</div>
+                                <div class="watcher-status">
+                                    <div class="status-dot online"></div>
+                                    <span>Online</span>
+                                </div>
+                            </div>
+                            <div class="watcher-stats">
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="gmailToday">0</div>
+                                    <div class="watcher-stat-label">Today</div>
+                                </div>
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="gmailTotal">0</div>
+                                    <div class="watcher-stat-label">Total</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Watcher -->
+                        <div class="watcher-card active">
+                            <div class="watcher-header">
+                                <div class="watcher-icon">💬</div>
+                                <div class="watcher-name">WhatsApp Watcher</div>
+                                <div class="watcher-status">
+                                    <div class="status-dot online"></div>
+                                    <span>Online</span>
+                                </div>
+                            </div>
+                            <div class="watcher-stats">
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="whatsappToday">0</div>
+                                    <div class="watcher-stat-label">Today</div>
+                                </div>
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="whatsappTotal">0</div>
+                                    <div class="watcher-stat-label">Total</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Facebook Watcher -->
+                        <div class="watcher-card active">
+                            <div class="watcher-header">
+                                <div class="watcher-icon">📘</div>
+                                <div class="watcher-name">Facebook Watcher</div>
+                                <div class="watcher-status">
+                                    <div class="status-dot online"></div>
+                                    <span>Online</span>
+                                </div>
+                            </div>
+                            <div class="watcher-stats">
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="facebookToday">0</div>
+                                    <div class="watcher-stat-label">Comments</div>
+                                </div>
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="facebookLeads">0</div>
+                                    <div class="watcher-stat-label">Leads</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- HR Automation -->
+                        <div class="watcher-card active">
+                            <div class="watcher-header">
+                                <div class="watcher-icon">👥</div>
+                                <div class="watcher-name">HR Automation</div>
+                                <div class="watcher-status">
+                                    <div class="status-dot online"></div>
+                                    <span>Online</span>
+                                </div>
+                            </div>
+                            <div class="watcher-stats">
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="hrToday">0</div>
+                                    <div class="watcher-stat-label">Applications</div>
+                                </div>
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="hrInterviews">0</div>
+                                    <div class="watcher-stat-label">Interviews</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Support -->
+                        <div class="watcher-card active">
+                            <div class="watcher-header">
+                                <div class="watcher-icon">🎧</div>
+                                <div class="watcher-name">Customer Support</div>
+                                <div class="watcher-status">
+                                    <div class="status-dot online"></div>
+                                    <span>Online</span>
+                                </div>
+                            </div>
+                            <div class="watcher-stats">
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="supportToday">0</div>
+                                    <div class="watcher-stat-label">Tickets</div>
+                                </div>
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="supportResolved">0</div>
+                                    <div class="watcher-stat-label">Resolved</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Odoo Integration -->
+                        <div class="watcher-card">
+                            <div class="watcher-header">
+                                <div class="watcher-icon">🗄️</div>
+                                <div class="watcher-name">Odoo CRM</div>
+                                <div class="watcher-status">
+                                    <div class="status-dot offline"></div>
+                                    <span>Config</span>
+                                </div>
+                            </div>
+                            <div class="watcher-stats">
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="odooLeads">0</div>
+                                    <div class="watcher-stat-label">Leads</div>
+                                </div>
+                                <div class="watcher-stat">
+                                    <div class="watcher-stat-value" id="odooInvoices">0</div>
+                                    <div class="watcher-stat-label">Invoices</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Charts -->
+                <section class="charts-grid">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-chart-line"></i>
+                                Task Distribution (7 Days)
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="taskDistributionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-chart-pie"></i>
+                                Skills Usage
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="skillsUsageChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Skills Tab -->
+            <div id="tab-skills" class="tab-content">
+                <section class="content-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-bolt"></i>
+                            Active Skills
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary" onclick="refreshSkills()">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">📧</div>
+                            <div class="skill-info">
+                                <div class="skill-name">Email Automation</div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-count" id="skillEmailCount">0</div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon">💬</div>
+                            <div class="skill-info">
+                                <div class="skill-name">WhatsApp Automation</div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-count" id="skillWhatsAppCount">0</div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon">📘</div>
+                            <div class="skill-info">
+                                <div class="skill-name">Facebook Automation</div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-count" id="skillFacebookCount">0</div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon">👥</div>
+                            <div class="skill-info">
+                                <div class="skill-name">HR Resume Automation</div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-count" id="skillHRCount">0</div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon">🎧</div>
+                            <div class="skill-info">
+                                <div class="skill-name">Customer Support AI</div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-count" id="skillSupportCount">0</div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon">🗄️</div>
+                            <div class="skill-info">
+                                <div class="skill-name">Odoo CRM Integration</div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-count" id="skillOdooCount">0</div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon">📅</div>
+                            <div class="skill-info">
+                                <div class="skill-name">Google Calendar</div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-count" id="skillCalendarCount">0</div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon">📄</div>
+                            <div class="skill-info">
+                                <div class="skill-name">Google Docs</div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-count" id="skillDocsCount">0</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Logs Tab -->
+            <div id="tab-logs" class="tab-content">
+                <section class="content-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-scroll"></i>
+                            System Logs
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary" onclick="clearLogs()">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadLogs()">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                    <div class="logs-console" id="logsConsole">
+                        <!-- Logs will be populated dynamically -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- More tabs for other sections -->
+            <div id="tab-watchers" class="tab-content">
+                <section class="content-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-eye"></i>
+                            Watchers Management
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary);">Detailed watcher controls and configuration coming soon...</p>
+                </section>
+            </div>
+
+            <div id="tab-analytics" class="tab-content">
+                <section class="content-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-chart-bar"></i>
+                            Advanced Analytics
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary);">Comprehensive analytics and reporting coming soon...</p>
+                </section>
+            </div>
+
+            <div id="tab-activity" class="tab-content">
+                <section class="content-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-history"></i>
+                            Activity Timeline
+                        </div>
+                    </div>
+                    <div class="activity-feed" id="activityFeed">
+                        <!-- Activity items will be populated dynamically -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Right Sidebar - Activity Feed -->
+        <aside class="right-sidebar">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fas fa-bell"></i>
+                    Recent Activity
+                </div>
+            </div>
+
+            <div class="activity-feed" id="activityFeedSidebar">
+                <!-- Sample activity items -->
+                <div class="activity-item">
+                    <div class="activity-icon">📧</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Email processed</div>
+                        <div class="activity-time">2 minutes ago</div>
+                        <div class="activity-meta">
+                            <span class="activity-tag">Gmail</span>
+                            <span class="activity-tag">Success</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">💬</div>
+                    <div class="activity-content">
+                        <div class="activity-title">WhatsApp message sent</div>
+                        <div class="activity-time">5 minutes ago</div>
+                        <div class="activity-meta">
+                            <span class="activity-tag">WhatsApp</span>
+                            <span class="activity-tag">Success</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">👥</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Resume parsed</div>
+                        <div class="activity-time">10 minutes ago</div>
+                        <div class="activity-meta">
+                            <span class="activity-tag">HR</span>
+                            <span class="activity-tag">Score: 85</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">📘</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Facebook comment detected</div>
+                        <div class="activity-time">15 minutes ago</div>
+                        <div class="activity-meta">
+                            <span class="activity-tag">Facebook</span>
+                            <span class="activity-tag">Lead Score: 75</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">🎧</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Support ticket created</div>
+                        <div class="activity-time">20 minutes ago</div>
+                        <div class="activity-meta">
+                            <span class="activity-tag">Support</span>
+                            <span class="activity-tag">Urgent</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-info-circle"></i>
+                        Quick Stats
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 12px; border: 1px solid rgba(102, 126, 234, 0.2);">
+                        <div style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 5px;">Avg Response Time</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-color);">2.4 min</div>
+                    </div>
+
+                    <div style="padding: 15px; background: rgba(56, 239, 125, 0.1); border-radius: 12px; border: 1px solid rgba(56, 239, 125, 0.2);">
+                        <div style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 5px;">Success Rate</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #38ef7d;">98.5%</div>
+                    </div>
+
+                    <div style="padding: 15px; background: rgba(245, 87, 108, 0.1); border-radius: 12px; border: 1px solid rgba(245, 87, 108, 0.2);">
+                        <div style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 5px;">Pending Approval</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #f5576c;" id="pendingApprovalCount">0</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById('tab-' + tabName);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            event.currentTarget.classList.add('active');
+        }
+
+        // Initialize charts
+        let taskDistributionChart, skillsUsageChart;
+
+        function initCharts() {
+            // Task Distribution Chart
+            const taskCtx = document.getElementById('taskDistributionChart').getContext('2d');
+            taskDistributionChart = new Chart(taskCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Tasks Completed',
+                        data: [12, 19, 15, 25, 22, 30, 28],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: '#94a3b8'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: '#94a3b8'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Skills Usage Chart
+            const skillsCtx = document.getElementById('skillsUsageChart').getContext('2d');
+            skillsUsageChart = new Chart(skillsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Email', 'WhatsApp', 'Facebook', 'HR', 'Support', 'Odoo'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 10, 5],
+                        backgroundColor: [
+                            '#667eea',
+                            '#11998e',
+                            '#f093fb',
+                            '#f5576c',
+                            '#4facfe',
+                            '#43e97b'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#94a3b8',
+                                padding: 15
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update dashboard data
+        function updateDashboard() {
+            // Simulate real-time updates
+            document.getElementById('cpuPercent').textContent = Math.floor(Math.random() * 30 + 20) + '%';
+            document.getElementById('cpuBar').style.width = document.getElementById('cpuPercent').textContent;
+            
+            document.getElementById('memoryPercent').textContent = Math.floor(Math.random() * 20 + 40) + '%';
+            document.getElementById('memoryBar').style.width = document.getElementById('memoryPercent').textContent;
+            
+            document.getElementById('diskPercent').textContent = Math.floor(Math.random() * 10 + 30) + '%';
+            document.getElementById('diskBar').style.width = document.getElementById('diskPercent').textContent;
+
+            // Update system time
+            const now = new Date();
+            document.getElementById('systemTime').textContent = now.toLocaleTimeString();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            updateDashboard();
+            setInterval(updateDashboard, 5000);
+        });
+
+        // Refresh functions
+        function refreshWatchers() {
+            // Add refresh animation
+            const btn = event.currentTarget;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-sync"></i> Refresh';
+            }, 1000);
+        }
+
+        function refreshSkills() {
+            const btn = event.currentTarget;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-sync"></i> Refresh';
+            }, 1000);
+        }
+
+        function clearLogs() {
+            document.getElementById('logsConsole').innerHTML = '';
+        }
+
+        function downloadLogs() {
+            alert('Log download functionality coming soon!');
+        }
+
+        // Add sample log entries
+        function addLogEntry(level, message) {
+            const logsConsole = document.getElementById('logsConsole');
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <div class="log-time">${timeStr}</div>
+                <div class="log-level ${level}">${level.toUpperCase()}</div>
+                <div class="log-message">${message}</div>
+            `;
+            
+            logsConsole.appendChild(logEntry);
+            logsConsole.scrollTop = logsConsole.scrollHeight;
+        }
+
+        // Sample logs
+        addLogEntry('info', 'Gmail watcher started - monitoring inbox');
+        addLogEntry('success', 'Email processed successfully - candidate@example.com');
+        addLogEntry('info', 'WhatsApp watcher connected');
+        addLogEntry('warning', 'High memory usage detected - 75%');
+        addLogEntry('success', 'HR resume parsed - Score: 85/100');
+        addLogEntry('info', 'Facebook comment detected - Lead score: 75');
+        addLogEntry('error', 'Failed to connect to Odoo - checking credentials');
+        addLogEntry('success', 'Support ticket created - SUP-20260327120000');
+    </script>
+</body>
+</html>

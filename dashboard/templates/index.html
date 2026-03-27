@@ -98,28 +98,55 @@
                 <div class="skill-bar">
                     <div class="skill-header">
                         <span class="skill-label">💬 WhatsApp</span>
-                        <span class="skill-value" id="skillWhatsAppValue">0</span>
+                        <span class="skill-value" id="skillWhatsAppValue">70</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill whatsapp" id="skillWhatsApp" style="width: 0%"></div>
+                        <div class="progress-fill whatsapp" id="skillWhatsApp" style="width: 70%"></div>
                     </div>
                 </div>
                 <div class="skill-bar">
                     <div class="skill-header">
                         <span class="skill-label">📧 Email</span>
-                        <span class="skill-value" id="skillEmailValue">0</span>
+                        <span class="skill-value" id="skillEmailValue">98</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill email" id="skillEmail" style="width: 0%"></div>
+                        <div class="progress-fill email" id="skillEmail" style="width: 97%"></div>
                     </div>
                 </div>
                 <div class="skill-bar">
                     <div class="skill-header">
                         <span class="skill-label">🔗 LinkedIn</span>
-                        <span class="skill-value" id="skillLinkedInValue">0</span>
+                        <span class="skill-value" id="skillLinkedInValue">80</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill linkedin" id="skillLinkedIn" style="width: 0%"></div>
+                        <div class="progress-fill linkedin" id="skillLinkedIn" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-header">
+                        <span class="skill-label">🔗 Facebook</span>
+                        <span class="skill-value" id="skillLinkedInValue">90</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill linkedin" id="skillLinkedIn" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-header">
+                        <span class="skill-label">🔗 ODOO</span>
+                        <span class="skill-value" id="skillLinkedInValue">70</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill linkedin" id="skillLinkedIn" style="width: 70%"></div>
+                    </div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-header">
+                        <span class="skill-label">🔗 Google Workspace</span>
+                        <span class="skill-value" id="skillLinkedInValue">97</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill linkedin" id="skillLinkedIn" style="width: 97%"></div>
                     </div>
                 </div>
             </div>
@@ -212,7 +239,7 @@
                 </div>
             </section>
 
-            <!-- Upload Section - NEW -->
+            <!-- Upload Section - Simplified -->
             <section class="upload-section">
                 <div class="section-tabs">
                     <button class="tab-btn active" onclick="showUploadTab('file')">📤 Upload File</button>
@@ -252,12 +279,12 @@
                             <div class="form-group">
                                 <label for="quickType">Task Type:</label>
                                 <select id="quickType" name="type">
-                                    <option value="general">General</option>
-                                    <option value="email">Email</option>
-                                    <option value="whatsapp">WhatsApp</option>
-                                    <option value="linkedin">LinkedIn</option>
-                                     <option value="twitter">Twitter</option>
-                                    <option value="odoo">Odoo CRM</option>
+                                    <option value="general">📝 General Task</option>
+                                    <option value="email">📧 Send Email</option>
+                                    <option value="whatsapp">💬 Send WhatsApp</option>
+                                    <option value="linkedin">🔗 LinkedIn Post</option>
+                                    <option value="twitter">🐦 Twitter Post</option>
+                                    <option value="facebook">📘 Facebook Post</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -267,14 +294,221 @@
                         </div>
                         <div class="form-group">
                             <label for="quickMessage">Your Message:</label>
-                            <textarea id="quickMessage" name="quickMessage" placeholder="e.g., Send email to client@example.com about project update..." required></textarea>
+                            <textarea id="quickMessage" name="quickMessage" placeholder="e.g., Send email to client@example.com about project update..." required style="min-height: 120px;"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-success">Create Task</button>
+                        <button type="submit" class="btn btn-success">✨ Create Task</button>
                     </form>
                 </div>
 
                 <div id="uploadStatus" class="upload-status"></div>
             </section>
+
+            <!-- Google Workspace Section (NEW) -->
+            <section class="upload-section">
+                <div class="section-header">
+                    <h3>🔧 Google Workspace</h3>
+                    <p>Create and manage Google Workspace resources</p>
+                </div>
+                
+                <div class="fb-tabs">
+                    <button class="fb-tab-btn active" onclick="showGoogleTab('calendar')">📅 Calendar</button>
+                    <button class="fb-tab-btn" onclick="showGoogleTab('docs')">📄 Docs</button>
+                    <button class="fb-tab-btn" onclick="showGoogleTab('drive')">📁 Drive</button>
+                    <button class="fb-tab-btn" onclick="showGoogleTab('sheets')">📊 Sheets</button>
+                    <button class="fb-tab-btn" onclick="showGoogleTab('meet')">📹 Meet</button>
+                </div>
+
+                <!-- Calendar Tab -->
+                <div class="fb-tab-content active" id="google-tab-calendar">
+                    <form id="googleCalendarForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="calendarTitle">Event Title:</label>
+                            <input type="text" id="calendarTitle" name="title" placeholder="e.g., Team Meeting" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="calendarDescription">Description:</label>
+                            <textarea id="calendarDescription" name="description" placeholder="Meeting agenda..." style="min-height: 80px;"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="calendarStartTime">Start Time:</label>
+                                <input type="datetime-local" id="calendarStartTime" name="start_time" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="calendarEndTime">End Time:</label>
+                                <input type="datetime-local" id="calendarEndTime" name="end_time" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="calendarAttendees">Attendees (comma-separated emails):</label>
+                            <input type="text" id="calendarAttendees" name="attendees" placeholder="john@example.com, jane@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="calendarMeetLink">Meeting Link (optional):</label>
+                            <input type="url" id="calendarMeetLink" name="meet_link" placeholder="https://meet.google.com/xxx-xxxx-xxx">
+                            <small style="color: var(--text-secondary); display: block; margin-top: 5px;">💡 Leave empty to auto-generate Google Meet link</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">📅 Create Event</button>
+                    </form>
+                    <div id="googleCalendarStatus" class="upload-status"></div>
+                </div>
+
+                <!-- Docs Tab -->
+                <div class="fb-tab-content" id="google-tab-docs">
+                    <form id="googleDocsForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="docsAction">Action:</label>
+                            <select id="docsAction" name="action">
+                                <option value="create">📄 Create Document</option>
+                                <option value="parse_resume">📄 Parse Resume (PDF)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="docsCreateFields">
+                            <label for="docsTitle">Document Title:</label>
+                            <input type="text" id="docsTitle" name="title" placeholder="e.g., Meeting Notes">
+                            <label for="docsContent" style="margin-top: 10px; display: block;">Content:</label>
+                            <textarea id="docsContent" name="content" placeholder="Document content..." style="min-height: 150px;"></textarea>
+                        </div>
+                        <div class="form-group" id="docsResumeFields" style="display: none;">
+                            <label for="docsResumeFile">Upload Resume (PDF):</label>
+                            <input type="file" id="docsResumeFile" name="resume_file" accept=".pdf,.doc,.docx">
+                            <label for="docsSaveTo" style="margin-top: 10px; display: block;">Save Parsed Data To:</label>
+                            <select id="docsSaveTo" name="save_to">
+                                <option value="odoo">🏢 Odoo CRM</option>
+                                <option value="sheets">📊 Google Sheets</option>
+                                <option value="docs">📄 Google Doc</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">✨ Process</button>
+                    </form>
+                    <div id="googleDocsStatus" class="upload-status"></div>
+                </div>
+
+                <!-- Drive Tab -->
+                <div class="fb-tab-content" id="google-tab-drive">
+                    <form id="googleDriveForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="driveAction">Action:</label>
+                            <select id="driveAction" name="action">
+                                <option value="create_folder">📁 Create Folder</option>
+                                <option value="upload_file">📤 Upload File</option>
+                                <option value="organize">🗂️ Organize Files</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="driveFolderFields">
+                            <label for="driveFolderName">Folder Name:</label>
+                            <input type="text" id="driveFolderName" name="folder_name" placeholder="e.g., Client Reports">
+                            <label for="driveParentFolder" style="margin-top: 10px; display: block;">Parent Folder (optional):</label>
+                            <input type="text" id="driveParentFolder" name="parent_folder" placeholder="Leave empty for root">
+                        </div>
+                        <div class="form-group" id="driveUploadFields" style="display: none;">
+                            <label for="driveFile">Select File:</label>
+                            <input type="file" id="driveFile" name="file">
+                            <label for="driveUploadFolder" style="margin-top: 10px; display: block;">Upload To Folder (optional):</label>
+                            <input type="text" id="driveUploadFolder" name="upload_folder" placeholder="Folder name or ID">
+                        </div>
+                        <div class="form-group" id="driveOrganizeFields" style="display: none;">
+                            <label for="driveSourceFolder">Source Folder:</label>
+                            <input type="text" id="driveSourceFolder" name="source_folder" placeholder="Folder to organize">
+                            <label for="driveOrganizeBy" style="margin-top: 10px; display: block;">Organize By:</label>
+                            <select id="driveOrganizeBy" name="organize_by">
+                                <option value="date">📅 Date</option>
+                                <option value="type">📄 File Type</option>
+                                <option value="name">🔤 Alphabetical</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">✨ Process</button>
+                    </form>
+                    <div id="googleDriveStatus" class="upload-status"></div>
+                </div>
+
+                <!-- Sheets Tab -->
+                <div class="fb-tab-content" id="google-tab-sheets">
+                    <form id="googleSheetsForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="sheetsAction">Action:</label>
+                            <select id="sheetsAction" name="action">
+                                <option value="create">📊 Create Spreadsheet</option>
+                                <option value="import">📥 Import Data</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="sheetsCreateFields">
+                            <label for="sheetsTitle">Spreadsheet Title:</label>
+                            <input type="text" id="sheetsTitle" name="title" placeholder="e.g., Sales Report">
+                            <label for="sheetsDataFormat" style="margin-top: 10px; display: block;">Data Format:</label>
+                            <select id="sheetsDataFormat" name="data_format">
+                                <option value="csv">CSV</option>
+                                <option value="manual">Manual Entry</option>
+                            </select>
+                            <label for="sheetsCSV" style="margin-top: 10px; display: none;">Upload CSV:</label>
+                            <input type="file" id="sheetsCSV" name="csv_file" accept=".csv" style="display: none;">
+                            <label for="sheetsManualData" style="margin-top: 10px; display: block;">Enter Data (CSV format):</label>
+                            <textarea id="sheetsManualData" name="manual_data" placeholder="Name,Email,Status&#10;John,john@example.com,Active&#10;Jane,jane@example.com,Pending" style="min-height: 120px; font-family: monospace;"></textarea>
+                        </div>
+                        <div class="form-group" id="sheetsImportFields" style="display: none;">
+                            <label for="sheetsImportFile">Upload File:</label>
+                            <input type="file" id="sheetsImportFile" name="import_file" accept=".csv,.xlsx,.xls">
+                            <label for="sheetsTargetSheet" style="margin-top: 10px; display: block;">Target Spreadsheet:</label>
+                            <input type="text" id="sheetsTargetSheet" name="target_sheet" placeholder="Spreadsheet ID or name">
+                        </div>
+                        <button type="submit" class="btn btn-primary">✨ Process</button>
+                    </form>
+                    <div id="googleSheetsStatus" class="upload-status"></div>
+                </div>
+
+                <!-- Meet Tab -->
+                <div class="fb-tab-content" id="google-tab-meet">
+                    <form id="googleMeetForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="meetTitle">Meeting Title:</label>
+                            <input type="text" id="meetTitle" name="title" placeholder="e.g., Client Discovery Call" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="meetDescription">Description:</label>
+                            <textarea id="meetDescription" name="description" placeholder="Meeting agenda and details..." style="min-height: 80px;"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="meetDateTime">Date & Time:</label>
+                                <input type="datetime-local" id="meetDateTime" name="datetime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="meetDuration">Duration:</label>
+                                <select id="meetDuration" name="duration">
+                                    <option value="15">15 minutes</option>
+                                    <option value="30" selected>30 minutes</option>
+                                    <option value="45">45 minutes</option>
+                                    <option value="60">1 hour</option>
+                                    <option value="90">1.5 hours</option>
+                                    <option value="120">2 hours</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meetParticipants">Participants (comma-separated emails):</label>
+                            <input type="text" id="meetParticipants" name="participants" placeholder="client@example.com, team@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="meetAgenda">Agenda:</label>
+                            <textarea id="meetAgenda" name="agenda" placeholder="Meeting agenda points..." style="min-height: 80px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" name="create_calendar" checked>
+                                <span>📅 Create Calendar Event</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" name="send_invites" checked>
+                                <span>📧 Send Email Invites</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-success">📹 Schedule Meeting</button>
+                    </form>
+                    <div id="googleMeetStatus" class="upload-status"></div>
+                </div>
+            </section>
+
+          
 
             <!-- Twitter Management Section -->
             <section class="upload-section">
@@ -526,9 +760,493 @@
                 color: var(--text-secondary);
                 margin-top: 5px;
             }
+
+            /* Workflow Cards */
+            .workflow-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 20px;
+                margin-top: 20px;
+            }
+
+            .workflow-card {
+                background: var(--bg-card);
+                padding: 20px;
+                border-radius: 12px;
+                border: 2px solid var(--bg-hover);
+                transition: all 0.3s;
+            }
+
+            .workflow-card:hover {
+                border-color: #1877F2;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(24, 119, 242, 0.2);
+            }
+
+            .workflow-icon {
+                font-size: 3em;
+                margin-bottom: 10px;
+            }
+
+            .workflow-card h4 {
+                margin: 10px 0;
+                color: var(--text-primary);
+            }
+
+            .workflow-card p {
+                color: var(--text-secondary);
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+
+            .workflow-details {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .workflow-details span {
+                background: var(--bg-hover);
+                padding: 5px 10px;
+                border-radius: 6px;
+                font-size: 12px;
+                color: var(--text-secondary);
+            }
+
+            .workflow-actions {
+                display: flex;
+                gap: 10px;
+            }
+
+            .workflow-actions .btn {
+                flex: 1;
+                padding: 8px 16px;
+                font-size: 13px;
+            }
             </style>
 
             <script>
+            // Google Workspace Tab Switching
+            function showGoogleTab(tab) {
+                document.querySelectorAll('.fb-tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('#google-tab-calendar, #google-tab-docs, #google-tab-drive, #google-tab-sheets, #google-tab-meet').forEach(content => content.classList.remove('active'));
+                
+                event.target.classList.add('active');
+                document.getElementById('google-tab-' + tab).classList.add('active');
+            }
+
+            // Docs Action Change Handler
+            document.getElementById('docsAction').addEventListener('change', (e) => {
+                const action = e.target.value;
+                const createFields = document.getElementById('docsCreateFields');
+                const resumeFields = document.getElementById('docsResumeFields');
+                
+                if (action === 'create') {
+                    createFields.style.display = 'block';
+                    resumeFields.style.display = 'none';
+                } else {
+                    createFields.style.display = 'none';
+                    resumeFields.style.display = 'block';
+                }
+            });
+
+            // Drive Action Change Handler
+            document.getElementById('driveAction').addEventListener('change', (e) => {
+                const action = e.target.value;
+                const folderFields = document.getElementById('driveFolderFields');
+                const uploadFields = document.getElementById('driveUploadFields');
+                const organizeFields = document.getElementById('driveOrganizeFields');
+                
+                folderFields.style.display = action === 'create_folder' ? 'block' : 'none';
+                uploadFields.style.display = action === 'upload_file' ? 'block' : 'none';
+                organizeFields.style.display = action === 'organize' ? 'block' : 'none';
+            });
+
+            // Sheets Action Change Handler
+            document.getElementById('sheetsAction').addEventListener('change', (e) => {
+                const action = e.target.value;
+                const createFields = document.getElementById('sheetsCreateFields');
+                const importFields = document.getElementById('sheetsImportFields');
+                
+                createFields.style.display = action === 'create' ? 'block' : 'none';
+                importFields.style.display = action === 'import' ? 'block' : 'none';
+            });
+
+            // Sheets Data Format Change Handler
+            document.getElementById('sheetsDataFormat').addEventListener('change', (e) => {
+                const format = e.target.value;
+                const csvUpload = document.getElementById('sheetsCSV');
+                const manualData = document.getElementById('sheetsManualData');
+                
+                if (format === 'csv') {
+                    csvUpload.style.display = 'block';
+                    manualData.style.display = 'none';
+                } else {
+                    csvUpload.style.display = 'none';
+                    manualData.style.display = 'block';
+                }
+            });
+
+            // Google Calendar Form
+            document.getElementById('googleCalendarForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const statusDiv = document.getElementById('googleCalendarStatus');
+                
+                const formData = {
+                    title: document.getElementById('calendarTitle').value,
+                    description: document.getElementById('calendarDescription').value,
+                    start_time: document.getElementById('calendarStartTime').value.replace('T', ' '),
+                    end_time: document.getElementById('calendarEndTime').value.replace('T', ' '),
+                    attendees: document.getElementById('calendarAttendees').value,
+                    meet_link: document.getElementById('calendarMeetLink').value
+                };
+                
+                try {
+                    statusDiv.className = 'upload-status';
+                    statusDiv.textContent = '⏳ Creating calendar event...';
+                    statusDiv.style.display = 'block';
+                    
+                    const response = await fetch('/api/google/calendar/create', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        statusDiv.className = 'upload-status success';
+                        statusDiv.textContent = `✅ Event created! ${result.meet_link ? 'Meet link: ' + result.meet_link : ''}`;
+                        statusDiv.style.display = 'block';
+                        document.getElementById('googleCalendarForm').reset();
+                    } else {
+                        throw new Error(result.error || 'Failed to create event');
+                    }
+                } catch (error) {
+                    statusDiv.className = 'upload-status error';
+                    statusDiv.textContent = '❌ Error: ' + error.message;
+                    statusDiv.style.display = 'block';
+                }
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            });
+
+            // Google Docs Form
+            document.getElementById('googleDocsForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const statusDiv = document.getElementById('googleDocsStatus');
+                const action = document.getElementById('docsAction').value;
+                
+                try {
+                    statusDiv.className = 'upload-status';
+                    statusDiv.textContent = '⏳ Processing...';
+                    statusDiv.style.display = 'block';
+                    
+                    if (action === 'create') {
+                        const formData = {
+                            title: document.getElementById('docsTitle').value,
+                            content: document.getElementById('docsContent').value
+                        };
+                        
+                        const response = await fetch('/api/google/docs/create', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(formData)
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            statusDiv.className = 'upload-status success';
+                            statusDiv.textContent = `✅ Document created: ${result.link}`;
+                            statusDiv.style.display = 'block';
+                            document.getElementById('googleDocsForm').reset();
+                        } else {
+                            throw new Error(result.error || 'Failed to create document');
+                        }
+                    } else {
+                        // Resume parsing - create approval task
+                        const formData = new FormData();
+                        formData.append('resume_file', document.getElementById('docsResumeFile').files[0]);
+                        formData.append('save_to', document.getElementById('docsSaveTo').value);
+                        
+                        const response = await fetch('/api/google/docs/parse-resume', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            statusDiv.className = 'upload-status success';
+                            statusDiv.textContent = '✅ Resume uploaded for parsing! Check Pending Approval.';
+                            statusDiv.style.display = 'block';
+                            document.getElementById('googleDocsForm').reset();
+                        } else {
+                            throw new Error(result.error || 'Failed to upload resume');
+                        }
+                    }
+                } catch (error) {
+                    statusDiv.className = 'upload-status error';
+                    statusDiv.textContent = '❌ Error: ' + error.message;
+                    statusDiv.style.display = 'block';
+                }
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            });
+
+            // Google Drive Form
+            document.getElementById('googleDriveForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const statusDiv = document.getElementById('googleDriveStatus');
+                const action = document.getElementById('driveAction').value;
+                
+                try {
+                    statusDiv.className = 'upload-status';
+                    statusDiv.textContent = '⏳ Processing...';
+                    statusDiv.style.display = 'block';
+                    
+                    const formData = new FormData();
+                    formData.append('action', action);
+                    
+                    if (action === 'create_folder') {
+                        formData.append('folder_name', document.getElementById('driveFolderName').value);
+                        formData.append('parent_folder', document.getElementById('driveParentFolder').value);
+                    } else if (action === 'upload_file') {
+                        formData.append('file', document.getElementById('driveFile').files[0]);
+                        formData.append('upload_folder', document.getElementById('driveUploadFolder').value);
+                    } else if (action === 'organize') {
+                        formData.append('source_folder', document.getElementById('driveSourceFolder').value);
+                        formData.append('organize_by', document.getElementById('driveOrganizeBy').value);
+                    }
+                    
+                    const response = await fetch('/api/google/drive/process', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        statusDiv.className = 'upload-status success';
+                        statusDiv.textContent = '✅ ' + result.message;
+                        statusDiv.style.display = 'block';
+                        document.getElementById('googleDriveForm').reset();
+                    } else {
+                        throw new Error(result.error || 'Failed to process');
+                    }
+                } catch (error) {
+                    statusDiv.className = 'upload-status error';
+                    statusDiv.textContent = '❌ Error: ' + error.message;
+                    statusDiv.style.display = 'block';
+                }
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            });
+
+            // Google Sheets Form
+            document.getElementById('googleSheetsForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const statusDiv = document.getElementById('googleSheetsStatus');
+                const action = document.getElementById('sheetsAction').value;
+                
+                try {
+                    statusDiv.className = 'upload-status';
+                    statusDiv.textContent = '⏳ Processing...';
+                    statusDiv.style.display = 'block';
+                    
+                    if (action === 'create') {
+                        const formData = {
+                            title: document.getElementById('sheetsTitle').value,
+                            data_format: document.getElementById('sheetsDataFormat').value
+                        };
+                        
+                        if (formData.data_format === 'manual') {
+                            formData.manual_data = document.getElementById('sheetsManualData').value;
+                        }
+                        
+                        const response = await fetch('/api/google/sheets/create', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(formData)
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            statusDiv.className = 'upload-status success';
+                            statusDiv.textContent = `✅ Spreadsheet created: ${result.link}`;
+                            statusDiv.style.display = 'block';
+                            document.getElementById('googleSheetsForm').reset();
+                        } else {
+                            throw new Error(result.error || 'Failed to create spreadsheet');
+                        }
+                    } else {
+                        // Import data
+                        const formData = new FormData();
+                        formData.append('import_file', document.getElementById('sheetsImportFile').files[0]);
+                        formData.append('target_sheet', document.getElementById('sheetsTargetSheet').value);
+                        
+                        const response = await fetch('/api/google/sheets/import', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            statusDiv.className = 'upload-status success';
+                            statusDiv.textContent = '✅ Data imported successfully!';
+                            statusDiv.style.display = 'block';
+                            document.getElementById('googleSheetsForm').reset();
+                        } else {
+                            throw new Error(result.error || 'Failed to import data');
+                        }
+                    }
+                } catch (error) {
+                    statusDiv.className = 'upload-status error';
+                    statusDiv.textContent = '❌ Error: ' + error.message;
+                    statusDiv.style.display = 'block';
+                }
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            });
+
+            // Google Meet Form
+            document.getElementById('googleMeetForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const statusDiv = document.getElementById('googleMeetStatus');
+                
+                const duration = parseInt(document.getElementById('meetDuration').value);
+                const datetime = new Date(document.getElementById('meetDateTime').value);
+                const endTime = new Date(datetime.getTime() + duration * 60000);
+                
+                const formData = {
+                    title: document.getElementById('meetTitle').value,
+                    description: document.getElementById('meetDescription').value,
+                    start_time: datetime.toISOString().replace('T', ' ').substring(0, 16),
+                    end_time: endTime.toISOString().replace('T', ' ').substring(0, 16),
+                    participants: document.getElementById('meetParticipants').value,
+                    agenda: document.getElementById('meetAgenda').value,
+                    create_calendar: document.querySelector('input[name="create_calendar"]').checked,
+                    send_invites: document.querySelector('input[name="send_invites"]').checked
+                };
+                
+                try {
+                    statusDiv.className = 'upload-status';
+                    statusDiv.textContent = '⏳ Scheduling meeting...';
+                    statusDiv.style.display = 'block';
+                    
+                    const response = await fetch('/api/google/meet/schedule', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        statusDiv.className = 'upload-status success';
+                        statusDiv.textContent = `✅ Meeting scheduled! ${result.meet_link ? 'Meet: ' + result.meet_link : ''}`;
+                        statusDiv.style.display = 'block';
+                        document.getElementById('googleMeetForm').reset();
+                    } else {
+                        throw new Error(result.error || 'Failed to schedule meeting');
+                    }
+                } catch (error) {
+                    statusDiv.className = 'upload-status error';
+                    statusDiv.textContent = '❌ Error: ' + error.message;
+                    statusDiv.style.display = 'block';
+                }
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            });
+
+            // Workflow Functions
+            function configureWorkflow(workflowName) {
+                alert('⚙️ Configure ' + workflowName + ':\n\nThis will open workflow settings. (To be implemented)');
+            }
+
+            function generateReportNow() {
+                const statusDiv = document.createElement('div');
+                statusDiv.className = 'upload-status';
+                statusDiv.textContent = '📊 Generating Daily Business Report...';
+                statusDiv.style.display = 'block';
+                
+                // Insert after workflow section
+                const workflowSection = document.querySelector('.workflow-grid');
+                workflowSection.parentNode.insertBefore(statusDiv, workflowSection.nextSibling);
+                
+                // Call API to generate report now
+                fetch('/api/workflows/daily-report/generate', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        statusDiv.className = 'upload-status success';
+                        statusDiv.textContent = '✅ Report generated! Check your email and Google Docs.';
+                    } else {
+                        statusDiv.className = 'upload-status error';
+                        statusDiv.textContent = '❌ Error: ' + result.error;
+                    }
+                })
+                .catch(error => {
+                    statusDiv.className = 'upload-status error';
+                    statusDiv.textContent = '❌ Error: ' + error.message;
+                });
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
+
+            function toggleWorkflow(workflowName) {
+                alert('🔄 Toggle ' + workflowName + ':\n\nWorkflow status toggled. (To be implemented)');
+            }
+
+            function uploadResume() {
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = '.pdf,.doc,.docx';
+                fileInput.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const formData = new FormData();
+                        formData.append('resume_file', file);
+                        formData.append('save_to', 'odoo');
+                        
+                        fetch('/api/google/docs/parse-resume', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.success) {
+                                alert('✅ Resume uploaded for parsing! Check Pending Approval.');
+                            } else {
+                                alert('❌ Error: ' + result.error);
+                            }
+                        })
+                        .catch(error => {
+                            alert('❌ Error: ' + error.message);
+                        });
+                    }
+                };
+                fileInput.click();
+            }
+
             // Facebook Tab Switching
             function showFbTab(tab) {
                 document.querySelectorAll('.fb-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -849,6 +1567,30 @@
                         </div>
                         <div class="watcher-indicator"></div>
                     </div>
+                    <div class="watcher-item" id="watcherWhatsApp">
+                        <div class="watcher-icon">🔗</div>
+                        <div class="watcher-info">
+                            <div class="watcher-name">Google Workspace</div>
+                            <div class="watcher-status offline">Offline</div>
+                        </div>
+                        <div class="watcher-indicator"></div>
+                    </div>
+                     <div class="watcher-item" id="watcherWhatsApp">
+                        <div class="watcher-icon">🔗</div>
+                        <div class="watcher-info">
+                            <div class="watcher-name">Facebook</div>
+                            <div class="watcher-status offline">Offline</div>
+                        </div>
+                        <div class="watcher-indicator"></div>
+                    </div>
+                     <div class="watcher-item" id="watcherWhatsApp">
+                        <div class="watcher-icon">💬</div>
+                        <div class="watcher-info">
+                            <div class="watcher-name">ODDO</div>
+                            <div class="watcher-status offline">Offline</div>
+                        </div>
+                        <div class="watcher-indicator"></div>
+                    </div>
                     <div class="watcher-item" id="watcherGmail">
                         <div class="watcher-icon">📧</div>
                         <div class="watcher-info">
@@ -1010,6 +1752,19 @@
             setTimeout(() => {
                 statusDiv.style.display = 'none';
             }, 5000);
+        });
+
+        // Show/Hide Google Options based on task type
+        document.getElementById('quickType').addEventListener('change', (e) => {
+            const taskType = e.target.value;
+            const googleOptions = document.getElementById('googleOptions');
+            const googleTypes = ['google_calendar', 'google_docs', 'google_drive', 'google_sheets', 'google_meet'];
+            
+            if (googleTypes.includes(taskType)) {
+                googleOptions.style.display = 'block';
+            } else {
+                googleOptions.style.display = 'none';
+            }
         });
 
         // Facebook Post Form

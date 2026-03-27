@@ -1,0 +1,66 @@
+RESUME
+MUHAMMAD AHMED KHAN
+
+
+Karachi, Pakistan
+📧 ahmed.khan.dev@gmail.com
+ | 📞 +92 312 3456789
+🔗 linkedin.com/in/ahmedkhan-dev | 💻 github.com/ahmedkhan-dev
+
+PROFESSIONAL SUMMARY
+
+Motivated and detail-oriented Full Stack Developer with 2.5 years of hands-on experience building scalable web applications. Skilled in modern JavaScript frameworks, backend development, and database management. Strong problem-solving abilities with a passion for creating efficient and user-friendly solutions. Seeking to contribute to a growth-oriented development team.
+
+PROFESSIONAL EXPERIENCE
+
+Junior Full Stack Developer
+TechNova Solutions | Jan 2024 – Present
+
+Developed responsive and scalable web applications using React.js and Node.js
+Designed and implemented RESTful APIs and integrated third-party services
+Collaborated closely with UI/UX teams to enhance user experience
+Improved application performance, reducing load time by 30%
+
+Frontend Developer Intern
+CodeCrafters Pvt Ltd | Jun 2023 – Dec 2023
+
+Built reusable UI components using HTML, CSS, and JavaScript
+Assisted in debugging and enhancing existing web applications
+Worked in a team environment following agile methodologies
+EDUCATION
+
+Bachelor of Science in Computer Science
+University of Karachi | 2023
+CGPA: 3.4 / 4.0
+
+TECHNICAL SKILLS
+JavaScript, TypeScript
+React.js, Next.js
+Node.js, Express.js
+MongoDB, MySQL
+REST APIs, Git, GitHub
+SOFT SKILLS
+Communication
+Team Collaboration
+Problem Solving
+Time Management
+CERTIFICATIONS
+Full Stack Web Development – Coursera
+JavaScript Advanced Concepts – Udemy
+LANGUAGES
+English (Professional)
+Urdu (Native)
+PROJECT HIGHLIGHTS
+Built full-stack web applications with authentication and API integration
+Developed responsive UI systems with modern frameworks
+Optimized performance and improved user experience
+INTERVIEW & EVALUATION SUMMARY
+Technical Skills: Good
+Communication: Good
+Culture Fit: Excellent
+Overall Recommendation: Hire
+ADDITIONAL INFORMATION
+Strong foundation in full stack development
+Quick learner with growth mindset
+Able to work independently and in teams
+

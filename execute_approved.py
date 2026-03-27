@@ -480,9 +480,10 @@ status: {status}
             content = file_path.read_text(encoding='utf-8')
 
             # Determine action type and execute
-            if "APPROVAL_send_email" in file_path.name or "action: send_email" in content:
+            # Updated to support both old and new filename formats
+            if "APPROVAL_send_email" in file_path.name or "APPROVAL_email_" in file_path.name or "APPROVAL_interview" in file_path.name or "action: send_email" in content:
                 success = self.execute_email(file_path)
-            elif "APPROVAL_send_whatsapp" in file_path.name or "action: send_whatsapp" in content:
+            elif "APPROVAL_send_whatsapp" in file_path.name or "APPROVAL_whatsapp_" in file_path.name or "action: send_whatsapp" in content:
                 success = self.execute_whatsapp(file_path)
             elif "APPROVAL_linkedin_post" in file_path.name or "LINKEDIN_POST" in file_path.name or "action: linkedin_post" in content:
                 success = self.execute_linkedin(file_path)
@@ -492,6 +493,16 @@ status: {status}
                 success = self.execute_facebook_reply(file_path)
             elif "APPROVAL_facebook" in file_path.name or "action: facebook" in content:
                 success = self.execute_facebook(file_path)
+            elif "APPROVAL_google_calendar" in file_path.name or "APPROVAL_calendar_" in file_path.name or "action: google_calendar" in content:
+                success = self.execute_google_calendar(file_path)  # NEW!
+            elif "APPROVAL_google_docs" in file_path.name or "APPROVAL_docs_" in file_path.name or "action: google_docs" in content:
+                success = self.execute_google_docs(file_path)  # NEW!
+            elif "APPROVAL_google_drive" in file_path.name or "APPROVAL_drive_" in file_path.name or "action: google_drive" in content:
+                success = self.execute_google_drive(file_path)  # NEW!
+            elif "APPROVAL_google_sheets" in file_path.name or "APPROVAL_sheets_" in file_path.name or "action: google_sheets" in content:
+                success = self.execute_google_sheets(file_path)  # NEW!
+            elif "APPROVAL_rejection" in file_path.name or "action: send_rejection" in content:
+                success = self.execute_email(file_path)  # Rejection emails use same executor
             elif "ODOO_LEAD" in file_path.name or "action: create_lead" in content:
                 success = self.execute_odoo_lead(file_path)
             elif "ODOO_INV" in file_path.name or "action: create_invoice" in content:
@@ -986,20 +997,218 @@ original_file: {file_path.name}
         except Exception as e:
             logger.error(f"[TWITTER] Error: {e}")
             return False
+    
+    # ============================================
+    # GOOGLE WORKSPACE EXECUTION METHODS
+    # ============================================
+    
+    def execute_google_calendar(self, file_path: Path) -> bool:
+        """Execute Google Calendar event creation"""
+        try:
+            from services.google import GoogleCalendarService
+            
+            logger.info(f"[GOOGLE CALENDAR] Executing: {file_path.name}")
+            
+            # Read approval file
+            content = file_path.read_text(encoding='utf-8')
+            
+            # Extract event details from YAML frontmatter
+            summary = self.extract_yaml_field(content, 'summary') or 'Meeting'
+            description = self.extract_yaml_field(content, 'description') or ''
+            start_time = self.extract_yaml_field(content, 'start_time')
+            end_time = self.extract_yaml_field(content, 'end_time')
+            attendees_str = self.extract_yaml_field(content, 'attendees')
+            
+            # Parse attendees
+            attendees = []
+            if attendees_str:
+                attendees = [email.strip() for email in attendees_str.split(',')]
+            
+            if not start_time or not end_time:
+                logger.error(f"[GOOGLE CALENDAR] Missing start_time or end_time in {file_path.name}")
+                return False
+            
+            # Create calendar event
+            calendar = GoogleCalendarService()
+            result = calendar.create_event(
+                summary=summary,
+                description=description,
+                start_time=start_time,
+                end_time=end_time,
+                attendees=attendees
+            )
+            
+            if result['success']:
+                logger.info(f"[GOOGLE CALENDAR] Event created: {result['html_link']}")
+                logger.info(f"[GOOGLE CALENDAR] Meet link: {result['meet_link']}")
+                
+                self._create_execution_log(file_path, 'google_calendar', 'success', {
+                    'event_id': result['id'],
+                    'meet_link': result['meet_link']
+                })
+                return True
+            else:
+                logger.error(f"[GOOGLE CALENDAR] Event creation failed: {result['error']}")
+                return False
+        
+        except Exception as e:
+            logger.error(f"[GOOGLE CALENDAR] Error: {e}")
+            return False
+    
+    def execute_google_docs(self, file_path: Path) -> bool:
+        """Execute Google Docs creation"""
+        try:
+            from services.google import GoogleDocsService
+            
+            logger.info(f"[GOOGLE DOCS] Executing: {file_path.name}")
+            
+            # Read approval file
+            content = file_path.read_text(encoding='utf-8')
+            
+            # Extract document details
+            title = self.extract_yaml_field(content, 'title') or 'Untitled Document'
+            doc_content = self.extract_yaml_field(content, 'content') or ''
+            
+            # Create document
+            docs = GoogleDocsService()
+            result = docs.create_document(title, doc_content)
+            
+            if result['success']:
+                logger.info(f"[GOOGLE DOCS] Document created: {result['link']}")
+                
+                self._create_execution_log(file_path, 'google_docs', 'success', {
+                    'doc_id': result['id'],
+                    'link': result['link']
+                })
+                return True
+            else:
+                logger.error(f"[GOOGLE DOCS] Document creation failed: {result['error']}")
+                return False
+        
+        except Exception as e:
+            logger.error(f"[GOOGLE DOCS] Error: {e}")
+            return False
+    
+    def execute_google_drive(self, file_path: Path) -> bool:
+        """Execute Google Drive folder/file operations"""
+        try:
+            from services.google import GoogleDriveService
+            
+            logger.info(f"[GOOGLE DRIVE] Executing: {file_path.name}")
+            
+            # Read approval file
+            content = file_path.read_text(encoding='utf-8')
+            
+            # Extract operation details
+            action = self.extract_yaml_field(content, 'drive_action') or 'create_folder'
+            folder_name = self.extract_yaml_field(content, 'folder_name')
+            file_path_to_upload = self.extract_yaml_field(content, 'file_path')
+            
+            drive = GoogleDriveService()
+            
+            if action == 'create_folder':
+                if not folder_name:
+                    logger.error(f"[GOOGLE DRIVE] Missing folder_name in {file_path.name}")
+                    return False
+                
+                result = drive.create_folder(folder_name)
+                
+                if result['success']:
+                    logger.info(f"[GOOGLE DRIVE] Folder created: {result['link']}")
+                    self._create_execution_log(file_path, 'google_drive', 'success', {
+                        'folder_id': result['id'],
+                        'link': result['link']
+                    })
+                    return True
+            
+            elif action == 'upload_file':
+                if not file_path_to_upload:
+                    logger.error(f"[GOOGLE DRIVE] Missing file_path in {file_path.name}")
+                    return False
+                
+                result = drive.upload_file(file_path_to_upload)
+                
+                if result['success']:
+                    logger.info(f"[GOOGLE DRIVE] File uploaded: {result['link']}")
+                    self._create_execution_log(file_path, 'google_drive', 'success', {
+                        'file_id': result['id'],
+                        'link': result['link']
+                    })
+                    return True
+            
+            logger.error(f"[GOOGLE DRIVE] Unknown action: {action}")
+            return False
+        
+        except Exception as e:
+            logger.error(f"[GOOGLE DRIVE] Error: {e}")
+            return False
+    
+    def execute_google_sheets(self, file_path: Path) -> bool:
+        """Execute Google Sheets creation"""
+        try:
+            from services.google import GoogleSheetsService
+            
+            logger.info(f"[GOOGLE SHEETS] Executing: {file_path.name}")
+            
+            # Read approval file
+            content = file_path.read_text(encoding='utf-8')
+            
+            # Extract spreadsheet details
+            title = self.extract_yaml_field(content, 'title') or 'Untitled Spreadsheet'
+            data_str = self.extract_yaml_field(content, 'data')
+            
+            # Parse data (expecting JSON array or CSV format)
+            data = []
+            if data_str:
+                try:
+                    import json
+                    data = json.loads(data_str)
+                except:
+                    # Try CSV format
+                    lines = data_str.strip().split('\n')
+                    data = [line.split(',') for line in lines]
+            
+            # Create spreadsheet
+            sheets = GoogleSheetsService()
+            result = sheets.create_spreadsheet(title, data if data else None)
+            
+            if result['success']:
+                logger.info(f"[GOOGLE SHEETS] Spreadsheet created: {result['link']}")
+                
+                self._create_execution_log(file_path, 'google_sheets', 'success', {
+                    'spreadsheet_id': result['id'],
+                    'link': result['link']
+                })
+                return True
+            else:
+                logger.error(f"[GOOGLE SHEETS] Spreadsheet creation failed: {result['error']}")
+                return False
+        
+        except Exception as e:
+            logger.error(f"[GOOGLE SHEETS] Error: {e}")
+            return False
 
     def process_all_approved(self):
         """Process all approved files in Approved folder"""
         logger.info("[EXECUTOR] Checking for approved actions...")
 
-        # Process email approvals
+        # Process email approvals (all patterns including interview and rejection)
         for file_path in self.approved_folder.glob("APPROVAL_send_email_*.md"):
             self.process_approved_file(file_path)
-
-        # Process WhatsApp approvals
-        for file_path in self.approved_folder.glob("APPROVAL_send_whatsapp_*.md"):
+        for file_path in self.approved_folder.glob("APPROVAL_email_*.md"):
+            self.process_approved_file(file_path)
+        for file_path in self.approved_folder.glob("APPROVAL_interview_*.md"):
+            self.process_approved_file(file_path)
+        for file_path in self.approved_folder.glob("APPROVAL_rejection_*.md"):
             self.process_approved_file(file_path)
 
-        # Process LinkedIn approvals (both patterns)
+        # Process WhatsApp approvals (both old and new patterns)
+        for file_path in self.approved_folder.glob("APPROVAL_send_whatsapp_*.md"):
+            self.process_approved_file(file_path)
+        for file_path in self.approved_folder.glob("APPROVAL_whatsapp_*.md"):
+            self.process_approved_file(file_path)
+
+        # Process LinkedIn approvals (all patterns)
         for file_path in self.approved_folder.glob("APPROVAL_linkedin_post_*.md"):
             self.process_approved_file(file_path)
         for file_path in self.approved_folder.glob("APPROVAL_linkedin_*.md"):
@@ -1007,12 +1216,36 @@ original_file: {file_path.name}
         for file_path in self.approved_folder.glob("LINKEDIN_POST_*.md"):
             self.process_approved_file(file_path)
 
-        # Process Twitter approvals (NEW!)
+        # Process Twitter approvals
         for file_path in self.approved_folder.glob("APPROVAL_twitter_*.md"):
             self.process_approved_file(file_path)
 
         # Process Facebook approvals
         for file_path in self.approved_folder.glob("APPROVAL_facebook_*.md"):
+            self.process_approved_file(file_path)
+
+        # Process Google Calendar approvals (both patterns)
+        for file_path in self.approved_folder.glob("APPROVAL_google_calendar_*.md"):
+            self.process_approved_file(file_path)
+        for file_path in self.approved_folder.glob("APPROVAL_calendar_*.md"):
+            self.process_approved_file(file_path)
+
+        # Process Google Docs approvals (both patterns)
+        for file_path in self.approved_folder.glob("APPROVAL_google_docs_*.md"):
+            self.process_approved_file(file_path)
+        for file_path in self.approved_folder.glob("APPROVAL_docs_*.md"):
+            self.process_approved_file(file_path)
+
+        # Process Google Drive approvals (both patterns)
+        for file_path in self.approved_folder.glob("APPROVAL_google_drive_*.md"):
+            self.process_approved_file(file_path)
+        for file_path in self.approved_folder.glob("APPROVAL_drive_*.md"):
+            self.process_approved_file(file_path)
+
+        # Process Google Sheets approvals (both patterns)
+        for file_path in self.approved_folder.glob("APPROVAL_google_sheets_*.md"):
+            self.process_approved_file(file_path)
+        for file_path in self.approved_folder.glob("APPROVAL_sheets_*.md"):
             self.process_approved_file(file_path)
 
         # Process Odoo approvals (Gold Tier)
