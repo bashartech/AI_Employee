@@ -1,719 +1,651 @@
-# 🤖 AI Employee Vault - Cloud Automation System
+# 🤖 AI EMPLOYEE VAULT - Enterprise Automation Platform
 
-**AI-Powered Business Automation Platform | Cloud-Deployed & Production-Ready**
+**Your Complete AI Workforce - Automate Everything from One Dashboard**
 
-[![Status](https://img.shields.io/badge/status-production-green)](https://github.com)
-[![Version](https://img.shields.io/badge/version-4.0-blue)](https://github.com)
-[![Cloud](https://img.shields.io/badge/cloud-Digital%20Ocean-orange)](https://github.com)
-
----
-
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Current Features](#current-features)
-- [Cloud Automation](#cloud-automation)
-- [Local Automation](#local-automation)
-- [Architecture](#architecture)
-- [Cloud Infrastructure](#cloud-infrastructure)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Skills & Documentation](#skills--documentation)
-- [Troubleshooting](#troubleshooting)
-- [Support](#support)
+![Dashboard](https://img.shields.io/badge/Version-3.0-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-success)
 
 ---
 
-## 🎯 Overview
+## 🚀 **ALL-IN-ONE AI AUTOMATION SUITE**
 
-**AI Employee Vault** is a comprehensive AI-powered business automation platform deployed on Digital Ocean cloud. It automates workflows across **Facebook, Twitter, Email, WhatsApp, LinkedIn, and Odoo ERP** with Claude AI content generation, scheduling, and approval workflows.
+Replace Multiple Tools with One Platform:
 
-### **Key Capabilities**
-
-- ✅ **Multi-Channel Automation** - Facebook, Twitter, Email, WhatsApp, LinkedIn
-- ✅ **ERP Integration** - Full Odoo ERP integration (CRM, Sales, Invoicing)
-- ✅ **AI-Powered** - Claude AI for professional content generation
-- ✅ **Post Scheduling** - Schedule Twitter & Facebook posts
-- ✅ **Diagram Generation** - Auto-generate Mermaid diagrams (100% FREE)
-- ✅ **Image Upload** - Upload images with posts
-- ✅ **Approval Workflows** - Human-in-the-loop approval system
-- ✅ **Cloud-Native** - Deployed on Digital Ocean (24/7)
-- ✅ **Real-Time Monitoring** - Live dashboard with analytics
-- ✅ **Audit Trail** - Complete execution logs
+| Traditional Tools | AI Employee Vault Replacement |
+|------------------|------------------------------|
+| ❌ Social Media AI Manager | ✅ **Built-in** - Facebook, Twitter, LinkedIn, Instagram |
+| ❌ E-commerce Order Automation | ✅ **Built-in** - Odoo CRM Integration |
+| ❌ Daily Business Report Generator | ✅ **Built-in** - Automated Reports |
+| ❌ Smart Meeting Assistant | ✅ **Built-in** - Google Meet + Calendar |
+| ❌ Customer Support AI Agent | ✅ **Built-in** - Ticket + Email + Invoice |
+| ❌ Lead Management AI | ✅ **Built-in** - Odoo + Google Sheets |
+| ❌ HR / Employee Management AI | ✅ **Built-in** - Resume Parser + ATS |
+| ❌ Personal AI Executive Assistant | ✅ **Built-in** - Complete Dashboard |
 
 ---
 
-## ✨ CURRENT FEATURES
+## 🎯 **CORE FEATURES**
 
-### **1. Facebook Automation** 📘
+### **1️⃣ CUSTOMER SUPPORT AI AGENT** 🎧
 
-**Cloud-Based (Fully Automated)**
+**Automate 100% of Customer Support**
 
-**Capabilities:**
-- ✅ Create posts with AI-generated content
+```
+Customer Email → AI Analysis → Auto-Response + Ticket + Invoice + Lead Logging
+```
+
+#### **Features:**
+- ✅ **Smart Email Categorization**
+  - Urgent (Response: 1 hour)
+  - Billing (Response: 4 hours)
+  - Technical (Response: 24 hours)
+  - General Inquiry (Response: 24 hours)
+
+- ✅ **Automated Ticket Creation**
+  - Unique Ticket ID (SUP-YYYYMMDDHHMMSS)
+  - Google Doc for each ticket
+  - Google Sheets tracker
+  - Priority assignment
+
+- ✅ **AI Response Generation**
+  - Context-aware responses
+  - 5 pre-built templates
+  - Human approval workflow
+  - Professional tone
+
+- ✅ **Invoice Generation**
+  - Auto-create invoices for billing queries
+  - Save to Google Docs
+  - Odoo integration
+  - PDF export
+
+- ✅ **Lead Management**
+  - Detect sales opportunities
+  - Auto-save to Google Sheets
+  - Odoo CRM integration
+  - Lead scoring (0-100)
+
+#### **Workflow:**
+```
+📧 Email Received
+    ↓
+🤖 AI Categorizes (Urgent/Billing/Technical/General)
+    ↓
+🎫 Create Ticket (Google Doc + Sheets)
+    ↓
+📝 AI Generates Response
+    ↓
+✅ Human Approval (if required)
+    ↓
+📤 Send Email + Invoice
+    ↓
+📊 Log to Odoo CRM (if lead)
+```
+
+---
+
+### **2️⃣ HR / EMPLOYEE MANAGEMENT AI** 👥
+
+**Complete Hiring Automation - Resume to Interview**
+
+```
+Job Application → Resume Parse → ATS Score → Interview Schedule → Hire
+```
+
+#### **Features:**
+- ✅ **Multi-Format Resume Parsing**
+  - PDF (Text-based + Scanned with OCR)
+  - Word Documents (.docx, .doc)
+  - Email Body Text
+  - Google Docs Links
+  - Images (PNG, JPG with OCR)
+
+- ✅ **ATS Scoring System (0-100)**
+  - Contact Info (10 points)
+  - Experience (40 points)
+  - Education (20 points)
+  - Skills (30 points) - 500+ skill database
+  - Smart matching & fuzzy detection
+
+- ✅ **Automatic Interview Scheduling**
+  - High-score candidates (80+) → Auto-schedule
+  - Google Calendar integration
+  - Google Meet link generation
+  - Email invitation with approval
+
+- ✅ **Candidate Tracking**
+  - Google Sheets tracker
+  - Google Doc profiles
+  - Status management (New/Interview/Hired/Rejected)
+  - Export ready
+
+#### **Workflow:**
+```
+📧 Application Email Received
+    ↓
+📄 Parse Resume (PDF/Word/Text/Google Docs/Image)
+    ↓
+🎯 Extract: Name, Email, Phone, Skills, Experience, Education
+    ↓
+📊 ATS Score (0-100) with 500+ Skill Database
+    ↓
+    ├─ Score ≥ 80 → Schedule Interview (Google Meet)
+    ├─ Score 60-79 → Manual Review
+    └─ Score < 60 → Rejection Email
+    ↓
+📄 Save to Google Sheets + Google Doc Profile
+    ↓
+✅ Send Email (with Human Approval)
+```
+
+#### **Supported Resume Formats:**
+| Format | Support | Details |
+|--------|---------|---------|
+| PDF (Text) | ✅ Full | Direct text extraction |
+| PDF (Scanned) | ✅ OCR | Tesseract + Poppler |
+| Word (.docx) | ✅ Full | python-docx |
+| Email Body | ✅ Full | Direct parsing |
+| Google Docs | ✅ Full | API fetch |
+| Images | ✅ OCR | PNG, JPG with Tesseract |
+
+---
+
+### **3️⃣ SOCIAL MEDIA AI MANAGER** 📱
+
+**Manage All Social Platforms from One Dashboard**
+
+```
+Create Post → AI Generate Content + Image → Schedule/Post → Monitor Comments → Auto-Reply
+```
+
+#### **Features:**
+- ✅ **Multi-Platform Support**
+  - Facebook (Posts, Comments, Analytics)
+  - Twitter/X (Tweets, Threads, Scheduling)
+  - LinkedIn (Posts, Comments, Profile)
+  - Instagram (Coming Soon)
+
+- ✅ **AI Content Generation**
+  - Auto-generate post content
+  - Hashtag suggestions
+  - Professional tone
+  - Brand voice customization
+
+- ✅ **AI Image Generation**
+  - Workflow diagrams (Mermaid)
+  - Architecture charts
+  - Process flows
+  - Auto-attach to posts
+
+- ✅ **Comment Management**
+  - Real-time comment detection
+  - AI auto-reply
+  - Spam filtering
+  - Lead detection → Odoo CRM
+
+- ✅ **Scheduling & Analytics**
+  - Schedule posts in advance
+  - View recent posts
+  - Engagement metrics
+  - Page analytics
+
+#### **Workflow:**
+```
+✍️ Create Post (Dashboard)
+    ↓
+🤖 AI Generates Content + Image (Optional)
+    ↓
+📅 Schedule or Post Immediately
+    ↓
+💬 Monitor Comments (Real-time)
+    ↓
+    ├─ Comment Detected → Save Lead to Odoo
+    ├─ AI Auto-Reply (with Approval)
+    └─ Email Notification to Owner
+    ↓
+📊 Track Analytics
+```
+
+#### **Facebook Features:**
+- ✅ Create posts with text + image
 - ✅ Schedule posts for later
-- ✅ Upload images with posts
-- ✅ Delete posts by ID
-- ✅ Reply to comments automatically
+- ✅ View recent posts
+- ✅ View & reply to comments
+- ✅ Hide spam comments
+- ✅ Delete posts (with approval)
+- ✅ Page analytics
 - ✅ Lead detection from comments
-- ✅ Post analytics and insights
-- ✅ Odoo CRM integration for leads
 
-**Workflow:**
+#### **Twitter Features:**
+- ✅ Create tweets
+- ✅ Create threads (multi-tweet)
+- ✅ Schedule tweets
+- ✅ View recent tweets
+- ✅ Profile stats
+
+---
+
+### **4️⃣ PERSONAL AI EXECUTIVE ASSISTANT** 🎯
+
+**Your All-in-One Productivity Dashboard**
+
 ```
-User creates post → Claude enhances content → 
-Approval required → Human approves → 
-Posts to Facebook automatically (with image)
+One Dashboard → Manage Everything → AI Handles the Rest
 ```
 
-**API Endpoints:**
+#### **Features:**
+- ✅ **Google Workspace Integration**
+  - **Calendar**: Create events, schedule meetings, auto-generate Meet links
+  - **Docs**: Create documents, parse resumes, store invoices
+  - **Sheets**: Track leads, candidates, support tickets
+  - **Drive**: Organize files, create folders, upload documents
+  - **Meet**: Schedule video calls, send invites
+
+- ✅ **Email Management**
+  - Gmail monitoring (real-time)
+  - AI-drafted responses
+  - Professional tone
+  - Human approval workflow
+  - Auto-send on approval
+
+- ✅ **WhatsApp Automation**
+  - Local WhatsApp Web integration
+  - Auto-reply to messages
+  - Message scheduling
+  - Contact management
+  - Group messaging
+
+- ✅ **Task & Schedule Management**
+  - Create tasks
+  - Set reminders
+  - Schedule meetings
+  - Track completion
+  - Priority management
+
+- ✅ **Social Media Management**
+  - Post to Facebook, Twitter, LinkedIn
+  - Schedule posts
+  - Monitor comments
+  - View analytics
+  - AI content generation
+
+- ✅ **Database Storage**
+  - ORM database (SQLite/PostgreSQL)
+  - Store all data locally
+  - Export to CSV/Excel
+  - Backup & restore
+
+#### **Dashboard Features:**
 ```
-POST /api/facebook/post      - Create post
-POST /api/facebook/schedule  - Schedule post
-GET  /api/facebook/posts     - Get recent posts
-GET  /api/facebook/analytics - Get analytics
+📊 Real-time Stats
+├─ Today's Tasks
+├─ Success Rate
+├─ Active Watchers
+├─ System Resources (CPU, Memory, Disk)
+
+👁️ Watcher Status
+├─ Gmail Watcher (Online/Offline)
+├─ WhatsApp Watcher (Online/Offline)
+├─ Facebook Watcher (Online/Offline)
+├─ Orchestrator (Online/Offline)
+
+📥 Task Pipeline
+├─ Detection → Processing → Approval → Execution
+
+⚡ Active Skills
+├─ WhatsApp, Email, LinkedIn, HR, Support, Odoo
+
+📜 Live Activity Feed
+├─ Real-time task updates
+
+📈 Analytics Charts
+├─ Task Activity (24H/7D/30D)
+├─ Task Distribution
+├─ Skills Usage
 ```
 
 ---
 
-### **2. Twitter Automation** 🐦
+## 🛠️ **TECHNICAL STACK**
 
-**Cloud-Based (Semi-Automated)**
-
-**Capabilities:**
-- ✅ Create tweets with Claude AI enhancement
-- ✅ Schedule tweets for specific dates/times
-- ✅ Thread creation (multi-tweet)
-- ✅ Auto-generate diagrams (Mermaid)
-- ✅ Upload images (manual posting)
-- ✅ Profile information & analytics
-
-**Free Posting Method:**
-- Uses `twitter.com/intent/tweet` (100% FREE)
-- No Twitter API payment required
-- Human reviews before posting
-
-**API Endpoints:**
-```
-POST /api/twitter/post       - Create tweet
-POST /api/twitter/schedule   - Schedule tweet
-GET  /api/twitter/tweets     - Get recent tweets
-GET  /api/twitter/profile    - Get profile info
-```
+| Component | Technology |
+|-----------|-----------|
+| **Backend** | Python 3.10+, Flask |
+| **Frontend** | HTML, CSS, JavaScript, Chart.js |
+| **Database** | SQLite / PostgreSQL (ORM) |
+| **AI/ML** | Custom NLP, OCR (Tesseract) |
+| **Google APIs** | Gmail, Calendar, Docs, Sheets, Drive, Meet |
+| **Social Media** | Facebook Graph API, Twitter API, LinkedIn API |
+| **CRM** | Odoo ERP Integration |
+| **Messaging** | WhatsApp Web (whatsapp-web.js) |
+| **OCR** | Tesseract, pdf2image, Poppler |
+| **Deployment** | Systemd, Nginx, Docker (Optional) |
 
 ---
 
-### **3. Email Automation** 📧
+## 📦 **INSTALLATION**
 
-**Cloud-Based (Fully Automated)**
-
-**Capabilities:**
-- ✅ Gmail API integration
-- ✅ Auto-reply to incoming emails
-- ✅ Email templates and drafts
-- ✅ Attachment support
-- ✅ Email threading
-
-**Workflow:**
-```
-Gmail Watcher detects new email → 
-Creates task in Needs Action/ → 
-Claude drafts reply → Human approves → 
-Sends via Gmail API
-```
-
----
-
-### **4. WhatsApp Automation** 💬
-
-**Local-Based (Requires Local Session)**
-
-**Capabilities:**
-- ✅ Send messages (WhatsApp Web)
-- ✅ Auto-reply to messages
-- ✅ Group messaging
-- ✅ Media support (images, documents)
-- ✅ Contact management
-
-**Note:** Requires local browser session for authentication due to WhatsApp Web security.
-
----
-
-### **5. LinkedIn Automation** 🔗
-
-**Local-Based (Requires Local Session)**
-
-**Capabilities:**
-- ✅ Create professional posts
-- ✅ Auto-generate content with AI
-- ✅ Hashtag optimization
-- ✅ Post scheduling
-- ✅ Engagement tracking
-
-**Note:** Uses browser automation (Playwright).
-
----
-
-### **6. Odoo ERP Integration** 🏢
-
-**Cloud-Based (Fully Automated)**
-
-**Capabilities:**
-- ✅ Lead creation and management
-- ✅ Customer management
-- ✅ Sales quotations
-- ✅ Invoice generation
-- ✅ Inventory tracking
-- ✅ Financial reporting
-
-**Modules:**
-- CRM (Customer Relationship Management)
-- Sales (Quotations, Orders)
-- Invoicing (Customer Invoices)
-- Inventory (Stock Management)
-
----
-
-### **7. Post Scheduling** 🕐
-
-**Cloud-Based (Fully Automated)**
-
-**Capabilities:**
-- ✅ Schedule Twitter posts
-- ✅ Schedule Facebook posts
-- ✅ Claude AI enhancement at scheduled time
-- ✅ Auto-generate diagrams at scheduled time
-- ✅ Human approval required
-- ✅ Datetime picker in dashboard
-- ✅ View/cancel scheduled posts
-
-**How It Works:**
-```
-User schedules post → Saved to database → 
-Scheduler checks every 60 seconds → 
-At scheduled time:
-  1. Claude enhances content
-  2. Generates diagram (if keywords detected)
-  3. Creates approval file
-  4. Human approves
-  5. Posts automatically
-```
-
----
-
-### **8. Diagram Generation** 🎨
-
-**Cloud-Based (100% FREE)**
-
-**Capabilities:**
-- ✅ Auto-detect diagram requests
-- ✅ Mermaid code generation via Claude
-- ✅ Convert Mermaid → PNG
-- ✅ Professional styling with colors
-- ✅ No API costs (completely free)
-
-**Supported Diagrams:**
-- Flowcharts
-- Sequence diagrams
-- Class diagrams
-- Mind maps
-- Marketing funnels
-- Gantt charts
-- Architecture diagrams
-- Process workflows
-
-**Keywords That Trigger Diagrams:**
-```
-diagram, flowchart, workflow, architecture, 
-process, pipeline, graph, funnel, explain,
-how it works
-```
-
----
-
-### **9. Image Upload** 📷
-
-**Cloud-Based (Fully Automated)**
-
-**Capabilities:**
-- ✅ Upload images via dashboard
-- ✅ Attach images to Facebook posts
-- ✅ Attach images to Twitter posts (manual)
-- ✅ Supports PNG, JPG, GIF
-- ✅ Automatic file management
-
-**Workflow:**
-```
-User uploads image in dashboard → 
-Saved to Post_Images/ folder → 
-Task created with image_path in YAML → 
-Orchestrator reads image_path → 
-Creates approval file with image → 
-Human approves → 
-Posts with image attached
-```
-
----
-
-## ☁️ CLOUD AUTOMATION
-
-### **Running on Digital Ocean Cloud (24/7)**
-
-| Service | Status | Description |
-|---------|--------|-------------|
-| **Facebook Manager** | ✅ Active | Post creation, scheduling, analytics |
-| **Twitter Manager** | ✅ Active | Tweet creation, scheduling, threads |
-| **Gmail Manager** | ✅ Active | Email sending, auto-replies |
-| **Odoo Manager** | ✅ Active | CRM, Sales, Invoicing |
-| **Scheduler Service** | ✅ Active | Scheduled posts (checks every 60s) |
-| **Orchestrator** | ✅ Active | AI task processing with Claude |
-| **Execute Approved** | ✅ Active | Executes approved actions |
-| **Dashboard** | ✅ Active | Web UI (Port 5000) |
-| **Gmail Watcher** | ✅ Active | Monitors Gmail inbox |
-| **Inbox Watcher** | ✅ Active | Monitors file drops |
-
-### **Cloud Features:**
-- ✅ **24/7 Operation** - Always running
-- ✅ **Auto-Restart** - PM2 process management
-- ✅ **Logging** - Complete audit trail
-- ✅ **Monitoring** - Real-time status
-- ✅ **Scalable** - Easy to upgrade resources
-
----
-
-## 💻 LOCAL AUTOMATION
-
-### **Running on Local Machine (On-Demand)**
-
-| Service | Status | Description |
-|---------|--------|-------------|
-| **WhatsApp Watcher** | ⚠️ Local Required | WhatsApp Web automation |
-| **LinkedIn Watcher** | ⚠️ Local Required | LinkedIn browser automation |
-| **Claude Code CLI** | ⚠️ Local Required | AI content generation |
-
-### **Why Local Required:**
-
-**WhatsApp:**
-- WhatsApp Web requires active browser session
-- QR code authentication needed
-- Cannot run on cloud without violating ToS
-
-**LinkedIn:**
-- LinkedIn doesn't have public API for posting
-- Uses browser automation (Playwright)
-- Requires active login session
-
-**Claude Code:**
-- Claude Code CLI runs locally
-- Cloud server doesn't have Claude CLI access
-- Uses local Claude subscription
-
----
-
-## 🏗️ ARCHITECTURE
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    DIGITAL OCEAN CLOUD (24/7)                   │
-│                     IP: 167.71.237.77                           │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │   Facebook   │  │    Twitter   │  │    Gmail     │          │
-│  │   Manager    │  │   Manager    │  │   Manager    │          │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
-│         │                 │                 │                   │
-│         └─────────────────┼─────────────────┘                   │
-│                           │                                     │
-│                  ┌────────▼────────┐                            │
-│                  │  Orchestrator   │                            │
-│                  │   (AI Engine)   │                            │
-│                  └────────┬────────┘                            │
-│                           │                                     │
-│         ┌─────────────────┼─────────────────┐                   │
-│         │                 │                 │                   │
-│  ┌──────▼───────┐  ┌──────▼───────┐  ┌──────▼───────┐          │
-│  │   Scheduler  │  │    Odoo      │  │  Dashboard   │          │
-│  │   Service    │  │   Manager    │  │   (Web UI)   │          │
-│  └──────────────┘  └──────────────┘  └──────────────┘          │
-│                                                                 │
-│  PM2 Processes (6):                                            │
-│  - orchestrator      - execute-approved                        │
-│  - dashboard         - post-scheduler                          │
-│  - gmail-watcher     - inbox-watcher                           │
-│                                                                 │
-│  Ports: 5000 (Dashboard), 8069 (Odoo)                          │
-└─────────────────────────────────────────────────────────────────┘
-                           │
-                           │ HTTPS
-                           │
-┌──────────────────────────▼──────────────────────────────────────┐
-│                    LOCAL MACHINE (On-Demand)                    │
-├─────────────────────────────────────────────────────────────────┤
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │   WhatsApp   │  │   Browser    │  │   Claude     │          │
-│  │   Session    │  │   Access     │  │   Code CLI   │          │
-│  │  (Required)  │  │              │  │              │          │
-│  └──────────────┘  └──────────────┘  └──────────────┘          │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## ☁️ CLOUD INFRASTRUCTURE
-
-### **Hosting Provider: Digital Ocean**
-
-| Component | Specification | Details |
-|-----------|--------------|---------|
-| **Droplet** | 4GB RAM / 2 CPU | Ubuntu 24.04 LTS |
-| **Location** | New York (NYC1) | US East Coast |
-| **Public IP** | 167.71.237.77 | Static IP |
-| **Storage** | 80GB SSD | Application + Data |
-| **Uptime** | 99.9% SLA | 24/7 Operation |
-
-### **PM2 Process Management**
-
-| Process Name | Purpose | Port |
-|--------------|---------|------|
-| **dashboard** | Web dashboard (Flask) | 5000 |
-| **orchestrator** | AI task processing | - |
-| **execute-approved** | Execute approved actions | - |
-| **post-scheduler** | Scheduled post processing | - |
-| **gmail-watcher** | Gmail inbox monitoring | - |
-| **inbox-watcher** | General inbox monitoring | - |
-
----
-
-## 🌐 ACCESS URLs
-
-### **Production Environment**
-
-| Service | URL | Credentials | Purpose |
-|---------|-----|-------------|---------|
-| **Dashboard** | http://167.71.237.77:5000 | Admin | Main automation control panel |
-| **Odoo ERP** | http://167.71.237.77:8069 | admin / admin | ERP system |
-| **PM2 Monitor** | SSH Access | root | Process monitoring |
-
-### **Access Instructions**
-
-#### **1. Dashboard Access**
-```
-URL: http://167.71.237.77:5000
-Username: admin
-Password: [Contact Admin]
-```
-
-**Features:**
-- Create and manage automation tasks
-- Schedule Twitter & Facebook posts
-- Upload images with posts
-- Approve/reject pending actions
-- View execution logs and analytics
-- Monitor system health
-
-#### **2. SSH Access (Admin Only)**
-```bash
-ssh -i "your-private-key.pem" root@167.71.237.77
-```
-
-**Common Commands:**
-```bash
-# Check system status
-pm2 status
-
-# View logs
-pm2 logs orchestrator --lines 50
-pm2 logs execute-approved --lines 50
-pm2 logs dashboard --lines 50
-pm2 logs post-scheduler --lines 50
-
-# Restart services
-pm2 restart all
-
-# Monitor resources
-htop
-df -h
-```
-
----
-
-## 🚀 INSTALLATION
-
-### **Prerequisites**
-
-- Digital Ocean account
-- Domain name (optional)
-- Facebook Developer account
-- Twitter Developer account (FREE tier)
-- Google Cloud account (for Gmail API)
-- Odoo subscription (or Odoo Community)
-
-### **Step 1: Deploy to Digital Ocean**
-
-```bash
-# Create droplet
-Digital Ocean Dashboard → Create Droplet
-- Image: Ubuntu 24.04 LTS
-- Size: 4GB RAM / 2 CPU
-- Region: New York (NYC1)
-```
-
-### **Step 2: Install Dependencies**
-
-```bash
-# SSH into server
-ssh -i "your-key.pem" root@167.71.237.77
-
-# Update system
-apt update && apt upgrade -y
-
-# Install Python
-apt install python3 python3-pip python3-venv -y
-
-# Install Node.js
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt install nodejs -y
-
-# Install PM2
-npm install -g pm2
-
-# Install Docker (for Odoo)
-apt install docker.io docker-compose -y
-```
-
-### **Step 3: Deploy Application**
+### **Local Development:**
 
 ```bash
 # Clone repository
-cd /home
-git clone https://github.com/your-org/ai-employee-vault.git
+git clone https://github.com/yourusername/ai-employee-vault.git
 cd ai-employee-vault
 
 # Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
 
-# Install Python dependencies
+# Install dependencies
 pip install -r requirements.txt
-
-# Install Node.js dependencies
 npm install
 
+# Setup environment
+cp .env.example .env
+# Edit .env with your API keys
+
+# Generate Google token
+python generate_token.py
+
+# Start dashboard
+python dashboard/app.py
+
+# Start automation
+python run_automation.py
+
+# Start executor
+python execute_approved.py
+```
+
+### **Production Deployment (DigitalOcean/AWS/VPS):**
+
+```bash
+# SSH into server
+ssh root@your-server-ip
+
+# Install dependencies
+apt update && apt upgrade -y
+apt install -y python3 python3-pip python3-venv nodejs npm nginx git
+apt install -y poppler-utils tesseract-ocr tesseract-ocr-eng
+
+# Setup project
+mkdir -p /var/www/ai-employee-vault
+cd /var/www/ai-employee-vault
+
+# Transfer files (from local)
+scp -r * root@your-server-ip:/var/www/ai-employee-vault/
+
+# Setup virtual environment
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+npm install
+
+# Setup systemd services
+# (See deployment guide for service files)
+
+# Setup Nginx reverse proxy
+# (See deployment guide for Nginx config)
+
+# Setup SSL with Let's Encrypt
+certbot --nginx -d your-domain.com
+
 # Start services
-pm2 start ecosystem.config.js
-pm2 save
-pm2 startup
-```
-
-### **Step 4: Deploy Odoo**
-
-```bash
-# Start Odoo container
-docker run -d -p 8069:8069 --name odoo \
-  -e ODOO_DATABASE=ai_employee_db \
-  -e ODOO_ADMIN_PASSWORD=admin \
-  odoo:17.0
-```
-
-### **Step 5: Start Scheduler Service**
-
-```bash
-# Add scheduler to PM2
-pm2 start scheduler/main_scheduler.py --name post-scheduler
-
-# Save and restart
-pm2 save
-pm2 restart all
+systemctl start ai-vault
+systemctl start ai-vault-watchers
+systemctl start ai-vault-executor
+systemctl restart nginx
 ```
 
 ---
 
-## ⚙️ CONFIGURATION
+## 🔧 **CONFIGURATION**
 
-### **Environment Variables (.env)**
+### **Environment Variables (.env):**
 
-```bash
+```env
+# Flask Configuration
+PORT=5000
+HOST=0.0.0.0
+DEBUG=False
+SECRET_KEY=your-secret-key
+
+# Google Authentication
+GOOGLE_TOKEN_PATH=/path/to/token.json
+GOOGLE_CREDENTIALS_PATH=/path/to/credentials.json
+
+# Odoo Configuration
+ODOO_URL=https://your-company.odoo.com
+ODOO_DB=your_database
+ODOO_USERNAME=your_email@example.com
+ODOO_API_KEY=your_api_key
+
 # Facebook Configuration
-FACEBOOK_PAGE_TOKEN=EAAGmX...
-FACEBOOK_PAGE_ID=976642828873094
+FACEBOOK_PAGE_ID=your_page_id
+FACEBOOK_ACCESS_TOKEN=your_access_token
 
 # Twitter Configuration
 TWITTER_API_KEY=your_api_key
 TWITTER_API_SECRET=your_api_secret
-TWITTER_ACCESS_TOKEN=your_access_token
-TWITTER_ACCESS_TOKEN_SECRET=your_access_token_secret
+TWITTER_ACCESS_TOKEN=your_token
+TWITTER_ACCESS_SECRET=your_token_secret
+TWITTER_BEARER_TOKEN=your_bearer_token
 
-# Gmail Configuration
-GMAIL_CREDENTIALS_PATH=/home/ai-employee-vault/credentials.json
-GMAIL_TOKEN_PATH=/home/ai-employee-vault/gmail_token.json
+# WhatsApp Configuration
+WHATSAPP_SESSION_PATH=/path/to/whatsapp_session
 
-# Odoo Configuration
-ODOO_URL=http://localhost:8069
-ODOO_DB=ai_employee_db
-ODOO_USERNAME=admin
-ODOO_PASSWORD=admin
-
-# System Configuration
-BASE_DIR=/home/ai-employee-vault
-LOGS_DIR=/home/ai-employee-vault/logs
+# Paths
+BASE_DIR=/path/to/project
+LOGS_DIR=/path/to/logs
 ```
 
 ---
 
-## 📖 SKILLS & DOCUMENTATION
+## 📊 **FEATURE COMPARISON**
 
-### **Claude Skills** (In `.claude/skills/` folder)
-
-| Skill | Purpose | Use For |
-|-------|---------|---------|
-| **enterprise_saas_extension.md** | Enterprise transformation guide | Future SaaS development |
-| **complete_system_documentation.md** | Full system documentation | Onboarding, troubleshooting |
-| **facebook_automation.md** | Facebook API guide | Facebook automation |
-| **twitter_automation.md** | Twitter API guide | Twitter automation |
-
-### **How to Use Skills**
-
-```
-@enterprise_saas_extension Show me Phase 1 implementation
-@complete_system_documentation How does Gmail watcher work?
-@facebook_automation How to create posts with images?
-@twitter_automation How to schedule tweets?
-```
-
-### **Additional Documentation**
-
-| Document | Purpose |
-|----------|---------|
-| `SCHEDULING_IMPLEMENTATION.md` | Scheduling feature guide |
-| `MERMAID_DIAGRAM_IMPLEMENTATION.md` | Diagram generation guide |
-| `IMAGE_UPLOAD_COMPLETE.md` | Image upload guide |
-| `DEPLOYMENT_QUICK_START.md` | Quick deployment guide |
+| Feature | Traditional Tools | AI Employee Vault |
+|---------|------------------|-------------------|
+| **Customer Support** | Zendesk ($50/mo) + Freshdesk ($15/mo) | ✅ Included |
+| **HR/ATS System** | Greenhouse ($6000/yr) + Lever ($500/mo) | ✅ Included |
+| **Social Media Manager** | Buffer ($15/mo) + Hootsuite ($99/mo) | ✅ Included |
+| **Executive Assistant** | $3000-$5000/mo (human) | ✅ Included |
+| **Google Workspace** | $12/mo per user | ✅ Integrated |
+| **CRM** | Salesforce ($75/mo) + HubSpot ($50/mo) | ✅ Odoo Included |
+| **Total Monthly Cost** | **$400-$600/mo** | **One-time Setup** |
 
 ---
 
-## 🔧 TROUBLESHOOTING
+## 🎯 **USE CASES**
 
-### **Common Issues**
+### **1. E-commerce Business:**
+- ✅ Auto-reply to customer inquiries
+- ✅ Process orders via email
+- ✅ Generate invoices automatically
+- ✅ Track leads from social media
+- ✅ Schedule promotional posts
 
-#### **1. Orchestrator Not Processing Tasks**
+### **2. Digital Marketing Agency:**
+- ✅ Manage multiple client social media
+- ✅ Auto-generate post content
+- ✅ Monitor comments across platforms
+- ✅ Create client reports automatically
+- ✅ Schedule posts in advance
 
-**Symptoms:**
-- Tasks in Needs Action/ not being processed
-- No logs from orchestrator
+### **3. HR/Recruitment Agency:**
+- ✅ Parse hundreds of resumes daily
+- ✅ Auto-score candidates (ATS)
+- ✅ Schedule interviews automatically
+- ✅ Track candidates in Google Sheets
+- ✅ Send rejection/acceptance emails
 
-**Solution:**
+### **4. SaaS Company:**
+- ✅ Handle support tickets
+- ✅ Generate invoices for billing
+- ✅ Track leads from all channels
+- ✅ Schedule customer meetings
+- ✅ Create knowledge base docs
+
+### **5. Solopreneur/Consultant:**
+- ✅ Manage all social media
+- ✅ Handle client emails
+- ✅ Schedule client meetings
+- ✅ Generate proposals/invoices
+- ✅ Track all tasks in one place
+
+---
+
+## 📈 **ANALYTICS & REPORTING**
+
+### **Dashboard Metrics:**
+- 📊 Tasks completed today/week/month
+- ⚡ Success rate (%)
+- 🎯 Lead conversion rate
+- 📧 Email response time
+- 💬 Social media engagement
+- 👥 Candidate pipeline status
+- 🎫 Support ticket resolution time
+
+### **Automated Reports:**
+- 📄 Daily Business Report (Email + Google Doc)
+- 📊 Weekly Analytics Summary
+- 📈 Monthly Performance Report
+- 💰 Sales/Lead Report
+- 🎯 Social Media Analytics
+
+---
+
+## 🔒 **SECURITY**
+
+- ✅ Local data storage (your control)
+- ✅ Encrypted API keys
+- ✅ Secure SSH access
+- ✅ Firewall protection (UFW)
+- ✅ SSL/HTTPS support
+- ✅ Human approval workflow (no fully autonomous actions)
+- ✅ Audit logs for all actions
+
+---
+
+## 🚀 **DEPLOYMENT OPTIONS**
+
+### **Option 1: Cloud VPS (Recommended)**
+- DigitalOcean ($12/mo)
+- AWS EC2 (Free tier available)
+- Linode ($10/mo)
+- Vultr ($6/mo)
+
+### **Option 2: On-Premise Server**
+- Your own hardware
+- Complete control
+- No monthly costs
+
+### **Option 3: Docker Deployment**
 ```bash
-# Check if orchestrator is running
-pm2 status orchestrator
+# Build Docker image
+docker build -t ai-employee-vault .
 
-# If stopped, start it
-pm2 start orchestrator
-
-# Check logs for errors
-pm2 logs orchestrator --lines 100
+# Run container
+docker run -d -p 5000:5000 \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/logs:/app/logs \
+  --name ai-vault \
+  ai-employee-vault
 ```
 
-#### **2. Images Not Posting to Facebook**
+### **Option 4: Local Development**
+- Run on your laptop/desktop
+- Perfect for testing
+- No server costs
 
-**Symptoms:**
-- Logs show "Posting text only"
-- Image exists in Post_Images/
+---
 
-**Solution:**
+## 📚 **DOCUMENTATION**
+
+### **Skill Documentation:**
+- [`HR Resume Automation`](skills/hr-resume-automation/SKILL.md) - Complete HR hiring workflow
+- [`Customer Support Automation`](skills/customer-support-automation/SKILL.md) - Support ticket system
+- [`Facebook Automation`](skills/facebook-automation/SKILL.md) - Social media management
+- [`Email Automation`](skills/email-automation/SKILL.md) - Email processing
+- [`WhatsApp Automation`](skills/whatsapp-automation/SKILL.md) - WhatsApp messaging
+- [`Odoo Integration`](skills/odoo/SKILL.md) - CRM/ERP integration
+
+### **Guides:**
+- [Deployment Guide](DEPLOYMENT_GUIDE.md)
+- [Setup Guide](SETUP_GUIDE.md)
+- [Quick Start](QUICK_START.md)
+- [API Reference](API_REFERENCE.md)
+
+---
+
+## 🤝 **SUPPORT**
+
+### **Getting Help:**
+1. 📖 Check documentation in `/skills` folder
+2. 🐛 Report issues on GitHub
+3. 💬 Join community Discord (coming soon)
+4. 📧 Email support: support@ai-employee-vault.com
+
+### **Common Issues:**
+- **OCR not working**: Install Poppler + Tesseract (see Installation)
+- **Google API errors**: Regenerate token.json (see Setup Guide)
+- **Services not starting**: Check systemd logs (`journalctl -u ai-vault`)
+- **Dashboard not loading**: Check Nginx config + firewall rules
+
+---
+
+## 📝 **LICENSE**
+
+MIT License - See [LICENSE](LICENSE) file for details.
+
+---
+
+## 🎉 **GET STARTED NOW!**
+
 ```bash
-# Check if image_path in approval file
-cat Approved/APPROVAL_facebook_post_*.md | grep image_path
+# 1. Clone repository
+git clone https://github.com/yourusername/ai-employee-vault.git
 
-# Restart execute-approved
-pm2 restart execute-approved
+# 2. Install dependencies
+cd ai-employee-vault
+pip install -r requirements.txt
+npm install
+
+# 3. Setup environment
+cp .env.example .env
+# Edit .env with your API keys
+
+# 4. Generate Google token
+python generate_token.py
+
+# 5. Start dashboard
+python dashboard/app.py
+
+# 6. Open browser
+# http://localhost:5000
 ```
 
-#### **3. Scheduler Not Running**
-
-**Symptoms:**
-- Scheduled posts not being processed
-- No logs from post-scheduler
-
-**Solution:**
-```bash
-# Check if scheduler is running
-pm2 status post-scheduler
-
-# Check server time (timezone issue)
-date
-timedatectl
-
-# Fix timezone if needed
-timedatectl set-timezone Asia/Karachi
-
-# Restart scheduler
-pm2 restart post-scheduler
-```
-
-#### **4. Emoji Encoding Broken**
-
-**Symptoms:**
-- Emojis showing as `ðŸš€` instead of `🚀`
-
-**Solution:**
-```python
-# In orchestrator.py, ensure UTF-8 encoding
-result = subprocess.run(
-    [claude_path, '-p'],
-    input=claude_prompt,
-    capture_output=True,
-    text=True,
-    timeout=120,
-    shell=True,
-    encoding='utf-8',
-    errors='replace'
-)
-```
+**🚀 Your AI Employee is ready to work!**
 
 ---
 
-## 🛠️ SUPPORT
+## 💡 **WHY CHOOSE AI EMPLOYEE VAULT?**
 
-### **Getting Help**
-
-1. **Check Documentation:**
-   - Read skills in `.claude/skills/` folder
-   - Review troubleshooting section
-   - Check implementation guides
-
-2. **View Logs:**
-   ```bash
-   pm2 logs --lines 100
-   ```
-
-3. **Contact Support:**
-   - Email: support@aiemployeevault.com
-   - Slack: #ai-employee-vault
-   - GitHub Issues: Create issue with logs
+✅ **All-in-One Platform** - Replace 8+ different tools
+✅ **Cost Effective** - One-time setup vs monthly subscriptions
+✅ **Complete Control** - Your data, your server, your rules
+✅ **Customizable** - Open source, modify as needed
+✅ **Human Oversight** - Approval workflow for critical actions
+✅ **24/7 Operation** - Works while you sleep
+✅ **Scalable** - From solopreneur to enterprise
+✅ **Professional** - Enterprise-grade features
 
 ---
 
-## 📊 CURRENT STATUS
+**Built with ❤️ for businesses who want to automate everything**
 
-| Feature | Cloud | Local | Status |
-|---------|-------|-------|--------|
-| **Facebook Posts** | ✅ | - | Fully Automated |
-| **Facebook Scheduling** | ✅ | - | Fully Automated |
-| **Twitter Posts** | ✅ | - | Semi-Automated |
-| **Twitter Scheduling** | ✅ | - | Fully Automated |
-| **Email (Gmail)** | ✅ | - | Fully Automated |
-| **WhatsApp** | - | ✅ | Local Session Required |
-| **LinkedIn** | - | ✅ | Local Session Required |
-| **Odoo CRM** | ✅ | - | Fully Automated |
-| **Diagram Generation** | ✅ | - | Fully Automated |
-| **Image Upload** | ✅ | - | Fully Automated |
-| **Scheduling** | ✅ | - | Fully Automated |
+**⭐ Star this repo if you find it useful!**
 
----
-
-**Version:** 4.0 (Production Ready)  
-**Last Updated:** March 2026  
-**Status:** Cloud-Deployed ✅ | Production-Ready ✅
+**🚀 Deploy now: [Quick Start Guide](QUICK_START.md)**
