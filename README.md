@@ -586,7 +586,7 @@ docker run -d -p 5000:5000 \
 1. 📖 Check documentation in `/skills` folder
 2. 🐛 Report issues on GitHub
 3. 💬 Join community Discord (coming soon)
-4. 📧 Email support: support@ai-employee-vault.com
+4. 📧 Email support: bashartc13@gmail.com
 
 ### **Common Issues:**
 - **OCR not working**: Install Poppler + Tesseract (see Installation)
