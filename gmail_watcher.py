@@ -754,7 +754,7 @@ If reply needed, draft it and request approval before sending.
                     print(f"[{datetime.now().strftime('%H:%M:%S')}] No new important emails")
 
                 # Wait 2 minutes
-                time.sleep(120)
+                time.sleep(60)
 
             except KeyboardInterrupt:
                 print("\n\n✓ Gmail watcher stopped by user")
@@ -769,7 +769,7 @@ If reply needed, draft it and request approval before sending.
                 break
             except Exception as e:
                 print(f"❌ Error in watcher loop: {e}")
-                time.sleep(120)
+                time.sleep(60)
 
 if __name__ == "__main__":
     watcher = GmailWatcher()
